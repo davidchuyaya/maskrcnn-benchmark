@@ -34,6 +34,6 @@ def save(arr):
     img.save("demo.png")
 
 # load image and then run prediction
-image = load("http://farm3.staticflickr.com/2469/3915380994_2e611b1779_z.jpg")
+image = load("https://user-images.githubusercontent.com/3080674/29361099-52eb370c-8286-11e7-8274-ceb4895fe0b9.png")
 predictions = coco_demo.run_on_opencv_image(image)
 save(predictions)
