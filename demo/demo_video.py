@@ -20,7 +20,7 @@ coco_demo = COCODemo(
 # load video and then run prediction
 cam = cv.VideoCapture("/scratch/datasets/JAAD_clips/video_0001.mp4")
 codec = cv.VideoWriter_fourcc(*"MJPG")
-out = cv.VideoWriter("output.avi", codec, 30.0, (320, 240))
+out = cv.VideoWriter("output.avi", codec, 30.0, (int(cam.get(3)), int(cam.get(4))))
 i = 0
 while True:
     ret, img = cam.read()
