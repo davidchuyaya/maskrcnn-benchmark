@@ -19,7 +19,7 @@ coco_demo = COCODemo(
 
 # load video and then run prediction
 cam = cv.VideoCapture("/scratch/datasets/JAAD_clips/video_0001.mp4")
-codec = cv.VideoWriter_fourcc(*"MJPG")
+codec = cv.cv.CV_FOURCC('m', 'p', '4', 'v')
 out = cv.VideoWriter("output.avi", codec, 30.0, (int(cam.get(3)), int(cam.get(4))))
 i = 0
 while True:
@@ -27,10 +27,11 @@ while True:
     if not ret:
         break
     predictions = coco_demo.run_on_opencv_image(img)
-    cv.imwrite("./video/" + str(i) + ".png", predictions)
+#    cv.imwrite("./video/" + str(i) + ".png", predictions)
     i += 1
     if i == 2:
         break    
     out.write(predictions)
+#    out.write(predictions)
 cam.release()
 out.release()
