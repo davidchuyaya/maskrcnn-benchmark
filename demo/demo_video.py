@@ -20,12 +20,17 @@ coco_demo = COCODemo(
 # load video and then run prediction
 cam = cv.VideoCapture("/scratch/datasets/JAAD_clips/video_0001.mp4")
 codec = cv.VideoWriter_fourcc(*"XVID")
-out = cv.VideoWriter("out.avi", codec, 30.0, (320, 240))
+#out = cv.VideoWriter("out.avi", codec, 30.0, (320, 240))
+i = 0
 while True:
     ret, img = cam.read()
     if not ret:
         break
     predictions = coco_demo.run_on_opencv_image(img)
-    out.write(predictions)
+    cv.imwrite("./video/" + str(i) + ".png", predictions)
+    i += 1
+    if i == 10:
+        break    
+#out.write(predictions)
 cam.release()
-out.release()
+#out.release()
