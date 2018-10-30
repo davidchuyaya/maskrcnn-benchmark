@@ -21,16 +21,16 @@ coco_demo = COCODemo(
 cam = cv.VideoCapture("video_0001.mp4")
 codec = cv.VideoWriter_fourcc(*"MJPG")
 out = cv.VideoWriter("output.avi", codec, 30.0, (int(cam.get(3)), int(cam.get(4))))
-i = 0
+#i = 0
 while True:
     ret, img = cam.read()
     if not ret:
         break
     predictions = coco_demo.run_on_opencv_image(img)
 #    cv.imwrite("./video/" + str(i) + ".png", predictions)
-    i += 1
-    if i == 10:
-        break
+#    i += 1
+#    if i == 10:
+#        break
     out.write(predictions)
 cam.release()
 out.release()
