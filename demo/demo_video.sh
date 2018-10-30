@@ -1,8 +1,5 @@
 #!/bin/bash
 
-~/anaconda3/etc/profile.d/conda.sh activate base
-
-cd ~/maskrcnn-benchmark/demo
+#~/anaconda3/etc/profile.d/conda.sh activate base
 python demo_video.py
-echo "hi"
-
+echo "done!"
