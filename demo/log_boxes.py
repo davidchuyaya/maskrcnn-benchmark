@@ -5,6 +5,7 @@ from io import BytesIO
 from PIL import Image
 import numpy as np
 import sys
+import json
 
 # mode = "cpu" or "cuda"
 mode = sys.argv[1]
@@ -33,16 +34,25 @@ def load(url):
     image = np.array(pil_image)[:, :, [2, 1, 0]]
     return image
 
-def save(arr):
-    img = Image.fromarray(arr, "RGB")
-    img.save("out/" + image_file)
+def predict(img):
+    predictions = coco_demo.compute_prediction(img)
+    return coco_demo.select_top_predictions(predictions)
+
+def save(predictions):
+    labels = predictions.get_field("labels").tolist()
+    bounding_boxes = predictions.bbox.tolist()
+    json_objs = []
+
+    for i in range(len(labels)):
+        label = COCODemo.CATEGORIES[labels[i]]
+        bounding_box = bounding_boxes[i]
+        json_objs.append({"label": label, "bbox": bounding_box})
+
+    f = open("out.json", "w")
+    json.dump(json_objs, f)
+    f.close()
 
 # load image and then run prediction
 image = load("https://user-images.githubusercontent.com/3080674/29361099-52eb370c-8286-11e7-8274-ceb4895fe0b9.png")
-predictions = coco_demo.compute_prediction(image)
-top_predictions = coco_demo.select_top_predictions(predictions)
-out = str(top_predictions.get_field("labels"))
-out += str(top_predictions.bbox)
-f = open("out.json", "w")
-f.write(out)
-f.close()
+predictions = predict(image)
+save(predictions)
