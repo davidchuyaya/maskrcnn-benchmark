@@ -32,7 +32,7 @@ def get_file_names() -> list:
     return names
 
 def load(filename: str):
-    pil_image = Image.open(filename).convert("RGB")
+    pil_image = Image.open(directory + "/" + filename).convert("RGB")
     # convert to BGR format
     image = np.array(pil_image)[:, :, [2, 1, 0]]
     return image
