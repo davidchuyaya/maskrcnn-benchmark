@@ -26,12 +26,7 @@ import json
 import os
 import scipy.misc
 import sys
-
-import cityscapesscripts.evaluation.instances2dict_with_polygons as cs
-
-import detectron.utils.segms as segms_util
-import detectron.utils.boxes as bboxs_util
-
+import numpy as np
 
 def xyxy_to_xywh(xyxy):
     """Convert [x1 y1 x2 y2] box format to [x1 y1 w h] format."""
@@ -65,8 +60,8 @@ def polys_to_boxes(polys):
 
 def convert_cityscapes_instance_only(data_dir, out_dir):
     """Convert from cityscapes format to COCO instance seg format - polygons"""
-    sets = ["gtFine_val"]
-    ann_dirs = ["gtFine_trainvaltest/gtFine/val"]
+    sets = ["gtFine_val", "gtFine_train", "gtFine_test"]
+    ann_dirs = ["gtFine/val", "gtFine/train", "gtFine/test"]
     json_name = "instancesonly_filtered_%s.json"
     ends_in = "%s_polygons.json"
     img_id = 0
@@ -101,17 +96,9 @@ def convert_cityscapes_instance_only(data_dir, out_dir):
                         filename[: -len(ends_in % data_set.split("_")[0])]
                         + "leftImg8bit.png"
                     )
-                    image["seg_file_name"] = (
-                        filename[: -len(ends_in % data_set.split("_")[0])]
-                        + "%s_instanceIds.png" % data_set.split("_")[0]
-                    )
                     images.append(image)
 
-                    fullname = os.path.join(root, image["seg_file_name"])
-                    objects = cs.instances2dict_with_polygons(
-                        [fullname], verbose=False
-                    )[fullname]
-
+                    #TODO get objects with contours, area
                     for object_cls in objects:
                         if object_cls not in category_instancesonly:
                             continue  # skip non-instance categories
@@ -153,5 +140,10 @@ def convert_cityscapes_instance_only(data_dir, out_dir):
         print("Num categories: %s" % len(categories))
         print("Num images: %s" % len(images))
         print("Num annotations: %s" % len(annotations))
-        with open(os.path.join(out_dir, json_name % data_set), "wb") as outfile:
-            outfile.write(json.dumps(ann_dict))
+        with open(os.path.join(out_dir, json_name % data_set), "w") as outfile:
+            json.dump(ann_dict, outfile)
+
+if __name__ == '__main__':
+	datadir = sys.argv[1]
+	outdir = sys.argv[2]
+	convert_cityscapes_instance_only(datadir, outdir)
