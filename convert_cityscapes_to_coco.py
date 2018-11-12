@@ -28,6 +28,7 @@ import scipy.misc
 import sys
 import numpy as np
 
+
 def xyxy_to_xywh(xyxy):
     """Convert [x1 y1 x2 y2] box format to [x1 y1 w h] format."""
     if isinstance(xyxy, (list, tuple)):
@@ -58,6 +59,26 @@ def polys_to_boxes(polys):
     return boxes_from_polys
 
 
+def poly_to_segmentation(poly):
+    # poly = array of points. A point = array of ints, [[x1, y1], [x2, y2], ...].
+    # segmentation = array of array of points, [x1, y1, x2, y2, ...].
+    return poly.reshape([1, -1])
+
+
+def area_of_poly(poly):
+    # poly = array of points. A point = array of ints, [[x1, y1], [x2, y2], ...].
+    sum = 0
+    for i in range(len(poly)):
+        x0 = poly[i][0]
+        y0 = poly[i][1]
+        # j = next point, wrapping around to 0
+        j = i + 1 if i < len(poly) - 1 else 0
+        x1 = poly[j][0]
+        y1 = poly[j][1]
+        sum += x0 * y1 - x1 * y0
+    return abs(sum / 2)
+
+
 def convert_cityscapes_instance_only(data_dir, out_dir):
     """Convert from cityscapes format to COCO instance seg format - polygons"""
     sets = ["gtFine_val", "gtFine_train", "gtFine_test"]
@@ -69,7 +90,7 @@ def convert_cityscapes_instance_only(data_dir, out_dir):
     cat_id = 1
     category_dict = {}
 
-    category_instancesonly = ["traffic sign"]
+    categories = ["traffic sign"]
 
     for data_set, ann_dir in zip(sets, ann_dirs):
         print("Starting %s" % data_set)
@@ -79,57 +100,53 @@ def convert_cityscapes_instance_only(data_dir, out_dir):
         ann_dir = os.path.join(data_dir, ann_dir)
         for root, _, files in os.walk(ann_dir):
             for filename in files:
-                if filename.endswith(ends_in % data_set.split("_")[0]):
-                    if len(images) % 50 == 0:
-                        print(
-                            "Processed %s images, %s annotations"
-                            % (len(images), len(annotations))
-                        )
-                    json_ann = json.load(open(os.path.join(root, filename)))
-                    image = {}
-                    image["id"] = img_id
-                    img_id += 1
+                if not filename.endswith(ends_in % data_set.split("_")[0]):
+                    continue
 
-                    image["width"] = json_ann["imgWidth"]
-                    image["height"] = json_ann["imgHeight"]
-                    image["file_name"] = (
-                        filename[: -len(ends_in % data_set.split("_")[0])]
-                        + "leftImg8bit.png"
+                if len(images) % 50 == 0:
+                    print(
+                        "Processed %s images, %s annotations"
+                        % (len(images), len(annotations))
                     )
-                    images.append(image)
+                json_ann = json.load(open(os.path.join(root, filename)))
+                image = {}
+                image["id"] = img_id
+                img_id += 1
 
-                    #TODO get objects with contours, area
-                    for object_cls in objects:
-                        if object_cls not in category_instancesonly:
-                            continue  # skip non-instance categories
+                image["width"] = json_ann["imgWidth"]
+                image["height"] = json_ann["imgHeight"]
+                image["file_name"] = (
+                    filename[: -len(ends_in % data_set.split("_")[0])]
+                    + "leftImg8bit.png"
+                )
+                images.append(image)
 
-                        for obj in objects[object_cls]:
-                            if obj["contours"] == []:
-                                print("Warning: empty contours.")
-                                continue  # skip non-instance categories
+                objects = json_ann["objects"]
 
-                            len_p = [len(p) for p in obj["contours"]]
-                            if min(len_p) <= 4:
-                                print("Warning: invalid contours.")
-                                continue  # skip non-instance categories
+                for obj in objects:
+                    object_cls = obj["label"]
+                    if object_cls not in categories:
+                        continue  # skip categories
 
-                            ann = {}
-                            ann["id"] = ann_id
-                            ann_id += 1
-                            ann["image_id"] = image["id"]
-                            ann["segmentation"] = obj["contours"]
+                    poly = obj["polygon"]
 
-                            if object_cls not in category_dict:
-                                category_dict[object_cls] = cat_id
-                                cat_id += 1
-                            ann["category_id"] = category_dict[object_cls]
-                            ann["iscrowd"] = 0
-                            ann["area"] = obj["pixelCount"]
-                            ann["bbox"] = xyxy_to_xywh(
-                                polys_to_boxes([ann["segmentation"]])
-                            ).tolist()[0]
+                    ann = {}
+                    ann["id"] = ann_id
+                    ann_id += 1
+                    ann["image_id"] = image["id"]
+                    ann["segmentation"] = poly_to_segmentation(poly)
 
-                            annotations.append(ann)
+                    if object_cls not in category_dict:
+                        category_dict[object_cls] = cat_id
+                        cat_id += 1
+                    ann["category_id"] = category_dict[object_cls]
+                    ann["iscrowd"] = 0
+                    ann["area"] = area_of_poly(poly)
+                    ann["bbox"] = xyxy_to_xywh(
+                        polys_to_boxes([ann["segmentation"]])
+                    ).tolist()[0]
+
+                    annotations.append(ann)
 
         ann_dict["images"] = images
         categories = [
@@ -143,7 +160,9 @@ def convert_cityscapes_instance_only(data_dir, out_dir):
         with open(os.path.join(out_dir, json_name % data_set), "w") as outfile:
             json.dump(ann_dict, outfile)
 
-if __name__ == '__main__':
-	datadir = sys.argv[1]
-	outdir = sys.argv[2]
-	convert_cityscapes_instance_only(datadir, outdir)
+
+if __name__ == "__main__":
+    datadir = sys.argv[1]
+    outdir = sys.argv[2]
+    convert_cityscapes_instance_only(datadir, outdir)
+
