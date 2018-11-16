@@ -5,7 +5,7 @@ import os
 
 
 class DatasetCatalog(object):
-    DATA_DIR = "datasets"
+    DATA_DIR = "/scratch/datasets/cityscapes"
 
     DATASETS = {
         "coco_2014_train": (
@@ -21,22 +21,32 @@ class DatasetCatalog(object):
             "coco/val2014",
             "coco/annotations/instances_valminusminival2014.json",
         ),
+        "cityscapes_train": (
+            "gtFine/train",
+            "instancesonly_filtered_gtFine_train.json",
+        ),
+        "cityscapes_val": (
+            "gtFine/val",
+            "instancesonly_filtered_gtFine_val.json"
+        ),
+        "cityscapes_test": (
+            "gtFine/test", 
+            "instancesonly_filtered_gtFine_val.json"
+        )
     }
 
     @staticmethod
     def get(name):
-        if "coco" in name:
-            data_dir = DatasetCatalog.DATA_DIR
-            attrs = DatasetCatalog.DATASETS[name]
-            args = dict(
-                root=os.path.join(data_dir, attrs[0]),
-                ann_file=os.path.join(data_dir, attrs[1]),
-            )
-            return dict(
-                factory="COCODataset",
-                args=args,
-            )
-        raise RuntimeError("Dataset not available: {}".format(name))
+        data_dir = DatasetCatalog.DATA_DIR
+        attrs = DatasetCatalog.DATASETS[name]
+        args = dict(
+            root=os.path.join(data_dir, attrs[0]),
+            ann_file=os.path.join(data_dir, attrs[1]),
+        )
+        return dict(
+            factory="COCODataset",
+            args=args,
+        )
 
 
 class ModelCatalog(object):
