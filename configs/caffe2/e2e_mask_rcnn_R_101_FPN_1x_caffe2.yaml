@@ -30,6 +30,6 @@ MODEL:
   MASK_ON: True
 DATASETS:
   TRAIN: ("cityscape_train", "cityscape_val")
-  TEST: ("cityscape_test")
+  TEST: ("cityscape_test",)
 DATALOADER:
   SIZE_DIVISIBILITY: 32
