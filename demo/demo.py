@@ -5,7 +5,7 @@ from io import BytesIO
 from PIL import Image
 import numpy as np
 
-config_file = "../configs/caffe2/e2e_mask_rcnn_R_50_FPN_1x_caffe2.yaml"
+config_file = "../configs/e2e_mask_rcnn_R_101_FPN_1x.yaml"
 
 # update the config options with the config file
 cfg.merge_from_file(config_file)
@@ -34,6 +34,6 @@ def save(arr):
     img.save("demo.png")
 
 # load image and then run prediction
-image = load("https://user-images.githubusercontent.com/3080674/29361099-52eb370c-8286-11e7-8274-ceb4895fe0b9.png")
+image = load("http://farm1.staticflickr.com/117/307382050_53dc21e48a_z.jpg")
 predictions = coco_demo.run_on_opencv_image(image)
 save(predictions)
