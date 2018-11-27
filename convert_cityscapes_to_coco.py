@@ -90,7 +90,7 @@ def convert_cityscapes_instance_only(data_dir, out_dir):
     cat_id = 1
     category_dict = {}
 
-    categories_to_convert = ["traffic sign"]
+    categories_to_convert = ["traffic sign", "traffic light"]
 
     for data_set, ann_dir in zip(sets, ann_dirs):
         print("Starting %s" % data_set)
