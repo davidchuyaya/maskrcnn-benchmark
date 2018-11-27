@@ -31,7 +31,7 @@ class DatasetCatalog(object):
         ),
         "cityscapes_test": (
             "gtFine/test", 
-            "instancesonly_filtered_gtFine_val.json"
+            "instancesonly_filtered_gtFine_test.json"
         )
     }
 

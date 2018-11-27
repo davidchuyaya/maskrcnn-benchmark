@@ -3,7 +3,7 @@ from predictor import COCODemo
 import cv2 as cv
 import numpy as np
 
-config_file = "../configs/caffe2/e2e_mask_rcnn_R_50_FPN_1x_caffe2.yaml"
+config_file = "../configs/e2e_mask_rcnn_R_101_FPN_1x.yaml"
 
 # update the config options with the config file
 cfg.merge_from_file(config_file)
@@ -18,7 +18,7 @@ coco_demo = COCODemo(
 
 
 # load video and then run prediction
-cam = cv.VideoCapture("video_0001.mp4")
+cam = cv.VideoCapture("video_0067.mp4")
 codec = cv.VideoWriter_fourcc(*"MJPG")
 out = cv.VideoWriter("output.avi", codec, 30.0, (int(cam.get(3)), int(cam.get(4))))
 i = 0

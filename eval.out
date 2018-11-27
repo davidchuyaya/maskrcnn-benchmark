@@ -1,0 +1,757 @@
+2018-11-27 15:26:48,340 maskrcnn_benchmark INFO: Using 2 GPUs
+2018-11-27 15:26:48,340 maskrcnn_benchmark INFO: DATALOADER:
+  ASPECT_RATIO_GROUPING: True
+  NUM_WORKERS: 4
+  SIZE_DIVISIBILITY: 32
+DATASETS:
+  TEST: ('cityscapes_test',)
+  TRAIN: ('cityscapes_train', 'cityscapes_val')
+INPUT:
+  MAX_SIZE_TEST: 1333
+  MAX_SIZE_TRAIN: 1333
+  MIN_SIZE_TEST: 800
+  MIN_SIZE_TRAIN: 800
+  PIXEL_MEAN: [102.9801, 115.9465, 122.7717]
+  PIXEL_STD: [1.0, 1.0, 1.0]
+  TO_BGR255: True
+MODEL:
+  BACKBONE:
+    CONV_BODY: R-101-FPN
+    FREEZE_CONV_BODY_AT: 2
+    OUT_CHANNELS: 256
+  DEVICE: cuda
+  MASK_ON: True
+  META_ARCHITECTURE: GeneralizedRCNN
+  RESNETS:
+    NUM_GROUPS: 1
+    RES2_OUT_CHANNELS: 256
+    RES5_DILATION: 1
+    STEM_FUNC: StemWithFixedBatchNorm
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: True
+    TRANS_FUNC: BottleneckWithFixedBatchNorm
+    WIDTH_PER_GROUP: 64
+  ROI_BOX_HEAD:
+    FEATURE_EXTRACTOR: FPN2MLPFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 81
+    POOLER_RESOLUTION: 7
+    POOLER_SAMPLING_RATIO: 2
+    POOLER_SCALES: (0.25, 0.125, 0.0625, 0.03125)
+    PREDICTOR: FPNPredictor
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+    BBOX_REG_WEIGHTS: (10.0, 10.0, 5.0, 5.0)
+    BG_IOU_THRESHOLD: 0.5
+    DETECTIONS_PER_IMG: 100
+    FG_IOU_THRESHOLD: 0.5
+    NMS: 0.5
+    POSITIVE_FRACTION: 0.25
+    SCORE_THRESH: 0.05
+    USE_FPN: True
+  ROI_MASK_HEAD:
+    CONV_LAYERS: (256, 256, 256, 256)
+    FEATURE_EXTRACTOR: MaskRCNNFPNFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 2
+    POOLER_SCALES: (0.25, 0.125, 0.0625, 0.03125)
+    PREDICTOR: MaskRCNNC4Predictor
+    RESOLUTION: 28
+    SHARE_BOX_FEATURE_EXTRACTOR: False
+  RPN:
+    ANCHOR_SIZES: (32, 64, 128, 256, 512)
+    ANCHOR_STRIDE: (4, 8, 16, 32, 64)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BATCH_SIZE_PER_IMAGE: 256
+    BG_IOU_THRESHOLD: 0.3
+    FG_IOU_THRESHOLD: 0.7
+    FPN_POST_NMS_TOP_N_TEST: 1000
+    FPN_POST_NMS_TOP_N_TRAIN: 2000
+    MIN_SIZE: 0
+    NMS_THRESH: 0.7
+    POSITIVE_FRACTION: 0.5
+    POST_NMS_TOP_N_TEST: 1000
+    POST_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 1000
+    PRE_NMS_TOP_N_TRAIN: 2000
+    STRADDLE_THRESH: 0
+    USE_FPN: True
+  RPN_ONLY: False
+  WEIGHT: /home/dc788/maskrcnn-benchmark/model_0340000.pth
+OUTPUT_DIR: .
+PATHS_CATALOG: /home/dc788/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
+SOLVER:
+  BASE_LR: 0.02
+  BIAS_LR_FACTOR: 2
+  CHECKPOINT_PERIOD: 2500
+  GAMMA: 0.1
+  IMS_PER_BATCH: 16
+  MAX_ITER: 90000
+  MOMENTUM: 0.9
+  STEPS: (60000, 80000)
+  WARMUP_FACTOR: 0.3333333333333333
+  WARMUP_ITERS: 500
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0001
+  WEIGHT_DECAY_BIAS: 0
+TEST:
+  EXPECTED_RESULTS: []
+  EXPECTED_RESULTS_SIGMA_TOL: 4
+  IMS_PER_BATCH: 2
+2018-11-27 15:26:48,341 maskrcnn_benchmark INFO: Collecting env info (might take some time)
+2018-11-27 15:26:52,601 maskrcnn_benchmark INFO: 
+PyTorch version: 1.0.0.dev20181025
+Is debug build: No
+CUDA used to build PyTorch: 9.2.148
+
+OS: Ubuntu 16.04.5 LTS
+GCC version: (Ubuntu 5.4.0-6ubuntu1~16.04.10) 5.4.0 20160609
+CMake version: version 3.5.1
+
+Python version: 3.7
+Is CUDA available: Yes
+CUDA runtime version: Could not collect
+GPU models and configuration: 
+GPU 0: GeForce GTX 1080 Ti
+GPU 1: GeForce GTX 1080 Ti
+
+Nvidia driver version: 396.37
+cuDNN version: Probably one of the following:
+/usr/local/cuda-9.2/lib64/libcudnn.so.7.1.4
+/usr/local/cuda-9.2/lib64/libcudnn_static.a
+
+Versions of relevant libraries:
+[pip] Could not collect
+[conda] cuda92                    1.0                           0    pytorch
+[conda] pytorch-nightly           1.0.0.dev20181025 py3.7_cuda9.2.148_cudnn7.1.4_0  [cuda92]  pytorch
+        Pillow (5.2.0)
+2018-11-27 15:26:58,619 maskrcnn_benchmark.utils.checkpoint INFO: Loading checkpoint from /home/dc788/maskrcnn-benchmark/model_0340000.pth
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn1.bias                   loaded from backbone.body.layer1.0.bn1.bias                   of shape (64,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn1.running_mean           loaded from backbone.body.layer1.0.bn1.running_mean           of shape (64,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn1.running_var            loaded from backbone.body.layer1.0.bn1.running_var            of shape (64,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn1.weight                 loaded from backbone.body.layer1.0.bn1.weight                 of shape (64,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn2.bias                   loaded from backbone.body.layer1.0.bn2.bias                   of shape (64,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn2.running_mean           loaded from backbone.body.layer1.0.bn2.running_mean           of shape (64,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn2.running_var            loaded from backbone.body.layer1.0.bn2.running_var            of shape (64,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn2.weight                 loaded from backbone.body.layer1.0.bn2.weight                 of shape (64,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn3.bias                   loaded from backbone.body.layer1.0.bn3.bias                   of shape (256,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn3.running_mean           loaded from backbone.body.layer1.0.bn3.running_mean           of shape (256,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn3.running_var            loaded from backbone.body.layer1.0.bn3.running_var            of shape (256,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.bn3.weight                 loaded from backbone.body.layer1.0.bn3.weight                 of shape (256,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.conv1.weight               loaded from backbone.body.layer1.0.conv1.weight               of shape (64, 64, 1, 1)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.conv2.weight               loaded from backbone.body.layer1.0.conv2.weight               of shape (64, 64, 3, 3)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.conv3.weight               loaded from backbone.body.layer1.0.conv3.weight               of shape (256, 64, 1, 1)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.downsample.0.weight        loaded from backbone.body.layer1.0.downsample.0.weight        of shape (256, 64, 1, 1)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.downsample.1.bias          loaded from backbone.body.layer1.0.downsample.1.bias          of shape (256,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.downsample.1.running_mean  loaded from backbone.body.layer1.0.downsample.1.running_mean  of shape (256,)
+2018-11-27 15:26:59,234 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.downsample.1.running_var   loaded from backbone.body.layer1.0.downsample.1.running_var   of shape (256,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.0.downsample.1.weight        loaded from backbone.body.layer1.0.downsample.1.weight        of shape (256,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn1.bias                   loaded from backbone.body.layer1.1.bn1.bias                   of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn1.running_mean           loaded from backbone.body.layer1.1.bn1.running_mean           of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn1.running_var            loaded from backbone.body.layer1.1.bn1.running_var            of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn1.weight                 loaded from backbone.body.layer1.1.bn1.weight                 of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn2.bias                   loaded from backbone.body.layer1.1.bn2.bias                   of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn2.running_mean           loaded from backbone.body.layer1.1.bn2.running_mean           of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn2.running_var            loaded from backbone.body.layer1.1.bn2.running_var            of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn2.weight                 loaded from backbone.body.layer1.1.bn2.weight                 of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn3.bias                   loaded from backbone.body.layer1.1.bn3.bias                   of shape (256,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn3.running_mean           loaded from backbone.body.layer1.1.bn3.running_mean           of shape (256,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn3.running_var            loaded from backbone.body.layer1.1.bn3.running_var            of shape (256,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.bn3.weight                 loaded from backbone.body.layer1.1.bn3.weight                 of shape (256,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.conv1.weight               loaded from backbone.body.layer1.1.conv1.weight               of shape (64, 256, 1, 1)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.conv2.weight               loaded from backbone.body.layer1.1.conv2.weight               of shape (64, 64, 3, 3)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.1.conv3.weight               loaded from backbone.body.layer1.1.conv3.weight               of shape (256, 64, 1, 1)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn1.bias                   loaded from backbone.body.layer1.2.bn1.bias                   of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn1.running_mean           loaded from backbone.body.layer1.2.bn1.running_mean           of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn1.running_var            loaded from backbone.body.layer1.2.bn1.running_var            of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn1.weight                 loaded from backbone.body.layer1.2.bn1.weight                 of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn2.bias                   loaded from backbone.body.layer1.2.bn2.bias                   of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn2.running_mean           loaded from backbone.body.layer1.2.bn2.running_mean           of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn2.running_var            loaded from backbone.body.layer1.2.bn2.running_var            of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn2.weight                 loaded from backbone.body.layer1.2.bn2.weight                 of shape (64,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn3.bias                   loaded from backbone.body.layer1.2.bn3.bias                   of shape (256,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn3.running_mean           loaded from backbone.body.layer1.2.bn3.running_mean           of shape (256,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn3.running_var            loaded from backbone.body.layer1.2.bn3.running_var            of shape (256,)
+2018-11-27 15:26:59,235 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.bn3.weight                 loaded from backbone.body.layer1.2.bn3.weight                 of shape (256,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.conv1.weight               loaded from backbone.body.layer1.2.conv1.weight               of shape (64, 256, 1, 1)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.conv2.weight               loaded from backbone.body.layer1.2.conv2.weight               of shape (64, 64, 3, 3)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer1.2.conv3.weight               loaded from backbone.body.layer1.2.conv3.weight               of shape (256, 64, 1, 1)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn1.bias                   loaded from backbone.body.layer2.0.bn1.bias                   of shape (128,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn1.running_mean           loaded from backbone.body.layer2.0.bn1.running_mean           of shape (128,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn1.running_var            loaded from backbone.body.layer2.0.bn1.running_var            of shape (128,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn1.weight                 loaded from backbone.body.layer2.0.bn1.weight                 of shape (128,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn2.bias                   loaded from backbone.body.layer2.0.bn2.bias                   of shape (128,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn2.running_mean           loaded from backbone.body.layer2.0.bn2.running_mean           of shape (128,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn2.running_var            loaded from backbone.body.layer2.0.bn2.running_var            of shape (128,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn2.weight                 loaded from backbone.body.layer2.0.bn2.weight                 of shape (128,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn3.bias                   loaded from backbone.body.layer2.0.bn3.bias                   of shape (512,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn3.running_mean           loaded from backbone.body.layer2.0.bn3.running_mean           of shape (512,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn3.running_var            loaded from backbone.body.layer2.0.bn3.running_var            of shape (512,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.bn3.weight                 loaded from backbone.body.layer2.0.bn3.weight                 of shape (512,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.conv1.weight               loaded from backbone.body.layer2.0.conv1.weight               of shape (128, 256, 1, 1)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.conv2.weight               loaded from backbone.body.layer2.0.conv2.weight               of shape (128, 128, 3, 3)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.conv3.weight               loaded from backbone.body.layer2.0.conv3.weight               of shape (512, 128, 1, 1)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.downsample.0.weight        loaded from backbone.body.layer2.0.downsample.0.weight        of shape (512, 256, 1, 1)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.downsample.1.bias          loaded from backbone.body.layer2.0.downsample.1.bias          of shape (512,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.downsample.1.running_mean  loaded from backbone.body.layer2.0.downsample.1.running_mean  of shape (512,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.downsample.1.running_var   loaded from backbone.body.layer2.0.downsample.1.running_var   of shape (512,)
+2018-11-27 15:26:59,236 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.0.downsample.1.weight        loaded from backbone.body.layer2.0.downsample.1.weight        of shape (512,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn1.bias                   loaded from backbone.body.layer2.1.bn1.bias                   of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn1.running_mean           loaded from backbone.body.layer2.1.bn1.running_mean           of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn1.running_var            loaded from backbone.body.layer2.1.bn1.running_var            of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn1.weight                 loaded from backbone.body.layer2.1.bn1.weight                 of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn2.bias                   loaded from backbone.body.layer2.1.bn2.bias                   of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn2.running_mean           loaded from backbone.body.layer2.1.bn2.running_mean           of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn2.running_var            loaded from backbone.body.layer2.1.bn2.running_var            of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn2.weight                 loaded from backbone.body.layer2.1.bn2.weight                 of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn3.bias                   loaded from backbone.body.layer2.1.bn3.bias                   of shape (512,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn3.running_mean           loaded from backbone.body.layer2.1.bn3.running_mean           of shape (512,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn3.running_var            loaded from backbone.body.layer2.1.bn3.running_var            of shape (512,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.bn3.weight                 loaded from backbone.body.layer2.1.bn3.weight                 of shape (512,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.conv1.weight               loaded from backbone.body.layer2.1.conv1.weight               of shape (128, 512, 1, 1)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.conv2.weight               loaded from backbone.body.layer2.1.conv2.weight               of shape (128, 128, 3, 3)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.1.conv3.weight               loaded from backbone.body.layer2.1.conv3.weight               of shape (512, 128, 1, 1)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn1.bias                   loaded from backbone.body.layer2.2.bn1.bias                   of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn1.running_mean           loaded from backbone.body.layer2.2.bn1.running_mean           of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn1.running_var            loaded from backbone.body.layer2.2.bn1.running_var            of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn1.weight                 loaded from backbone.body.layer2.2.bn1.weight                 of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn2.bias                   loaded from backbone.body.layer2.2.bn2.bias                   of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn2.running_mean           loaded from backbone.body.layer2.2.bn2.running_mean           of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn2.running_var            loaded from backbone.body.layer2.2.bn2.running_var            of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn2.weight                 loaded from backbone.body.layer2.2.bn2.weight                 of shape (128,)
+2018-11-27 15:26:59,237 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn3.bias                   loaded from backbone.body.layer2.2.bn3.bias                   of shape (512,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn3.running_mean           loaded from backbone.body.layer2.2.bn3.running_mean           of shape (512,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn3.running_var            loaded from backbone.body.layer2.2.bn3.running_var            of shape (512,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.bn3.weight                 loaded from backbone.body.layer2.2.bn3.weight                 of shape (512,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.conv1.weight               loaded from backbone.body.layer2.2.conv1.weight               of shape (128, 512, 1, 1)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.conv2.weight               loaded from backbone.body.layer2.2.conv2.weight               of shape (128, 128, 3, 3)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.2.conv3.weight               loaded from backbone.body.layer2.2.conv3.weight               of shape (512, 128, 1, 1)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn1.bias                   loaded from backbone.body.layer2.3.bn1.bias                   of shape (128,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn1.running_mean           loaded from backbone.body.layer2.3.bn1.running_mean           of shape (128,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn1.running_var            loaded from backbone.body.layer2.3.bn1.running_var            of shape (128,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn1.weight                 loaded from backbone.body.layer2.3.bn1.weight                 of shape (128,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn2.bias                   loaded from backbone.body.layer2.3.bn2.bias                   of shape (128,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn2.running_mean           loaded from backbone.body.layer2.3.bn2.running_mean           of shape (128,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn2.running_var            loaded from backbone.body.layer2.3.bn2.running_var            of shape (128,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn2.weight                 loaded from backbone.body.layer2.3.bn2.weight                 of shape (128,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn3.bias                   loaded from backbone.body.layer2.3.bn3.bias                   of shape (512,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn3.running_mean           loaded from backbone.body.layer2.3.bn3.running_mean           of shape (512,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn3.running_var            loaded from backbone.body.layer2.3.bn3.running_var            of shape (512,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.bn3.weight                 loaded from backbone.body.layer2.3.bn3.weight                 of shape (512,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.conv1.weight               loaded from backbone.body.layer2.3.conv1.weight               of shape (128, 512, 1, 1)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.conv2.weight               loaded from backbone.body.layer2.3.conv2.weight               of shape (128, 128, 3, 3)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer2.3.conv3.weight               loaded from backbone.body.layer2.3.conv3.weight               of shape (512, 128, 1, 1)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn1.bias                   loaded from backbone.body.layer3.0.bn1.bias                   of shape (256,)
+2018-11-27 15:26:59,238 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn1.running_mean           loaded from backbone.body.layer3.0.bn1.running_mean           of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn1.running_var            loaded from backbone.body.layer3.0.bn1.running_var            of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn1.weight                 loaded from backbone.body.layer3.0.bn1.weight                 of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn2.bias                   loaded from backbone.body.layer3.0.bn2.bias                   of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn2.running_mean           loaded from backbone.body.layer3.0.bn2.running_mean           of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn2.running_var            loaded from backbone.body.layer3.0.bn2.running_var            of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn2.weight                 loaded from backbone.body.layer3.0.bn2.weight                 of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn3.bias                   loaded from backbone.body.layer3.0.bn3.bias                   of shape (1024,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn3.running_mean           loaded from backbone.body.layer3.0.bn3.running_mean           of shape (1024,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn3.running_var            loaded from backbone.body.layer3.0.bn3.running_var            of shape (1024,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.bn3.weight                 loaded from backbone.body.layer3.0.bn3.weight                 of shape (1024,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.conv1.weight               loaded from backbone.body.layer3.0.conv1.weight               of shape (256, 512, 1, 1)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.conv2.weight               loaded from backbone.body.layer3.0.conv2.weight               of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.conv3.weight               loaded from backbone.body.layer3.0.conv3.weight               of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.downsample.0.weight        loaded from backbone.body.layer3.0.downsample.0.weight        of shape (1024, 512, 1, 1)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.downsample.1.bias          loaded from backbone.body.layer3.0.downsample.1.bias          of shape (1024,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.downsample.1.running_mean  loaded from backbone.body.layer3.0.downsample.1.running_mean  of shape (1024,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.downsample.1.running_var   loaded from backbone.body.layer3.0.downsample.1.running_var   of shape (1024,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.0.downsample.1.weight        loaded from backbone.body.layer3.0.downsample.1.weight        of shape (1024,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn1.bias                   loaded from backbone.body.layer3.1.bn1.bias                   of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn1.running_mean           loaded from backbone.body.layer3.1.bn1.running_mean           of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn1.running_var            loaded from backbone.body.layer3.1.bn1.running_var            of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn1.weight                 loaded from backbone.body.layer3.1.bn1.weight                 of shape (256,)
+2018-11-27 15:26:59,239 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn2.bias                   loaded from backbone.body.layer3.1.bn2.bias                   of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn2.running_mean           loaded from backbone.body.layer3.1.bn2.running_mean           of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn2.running_var            loaded from backbone.body.layer3.1.bn2.running_var            of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn2.weight                 loaded from backbone.body.layer3.1.bn2.weight                 of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn3.bias                   loaded from backbone.body.layer3.1.bn3.bias                   of shape (1024,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn3.running_mean           loaded from backbone.body.layer3.1.bn3.running_mean           of shape (1024,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn3.running_var            loaded from backbone.body.layer3.1.bn3.running_var            of shape (1024,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.bn3.weight                 loaded from backbone.body.layer3.1.bn3.weight                 of shape (1024,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.conv1.weight               loaded from backbone.body.layer3.1.conv1.weight               of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.conv2.weight               loaded from backbone.body.layer3.1.conv2.weight               of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.1.conv3.weight               loaded from backbone.body.layer3.1.conv3.weight               of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn1.bias                  loaded from backbone.body.layer3.10.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn1.running_mean          loaded from backbone.body.layer3.10.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn1.running_var           loaded from backbone.body.layer3.10.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn1.weight                loaded from backbone.body.layer3.10.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn2.bias                  loaded from backbone.body.layer3.10.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn2.running_mean          loaded from backbone.body.layer3.10.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn2.running_var           loaded from backbone.body.layer3.10.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn2.weight                loaded from backbone.body.layer3.10.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn3.bias                  loaded from backbone.body.layer3.10.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn3.running_mean          loaded from backbone.body.layer3.10.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn3.running_var           loaded from backbone.body.layer3.10.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.bn3.weight                loaded from backbone.body.layer3.10.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.conv1.weight              loaded from backbone.body.layer3.10.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,240 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.conv2.weight              loaded from backbone.body.layer3.10.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.10.conv3.weight              loaded from backbone.body.layer3.10.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn1.bias                  loaded from backbone.body.layer3.11.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn1.running_mean          loaded from backbone.body.layer3.11.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn1.running_var           loaded from backbone.body.layer3.11.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn1.weight                loaded from backbone.body.layer3.11.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn2.bias                  loaded from backbone.body.layer3.11.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn2.running_mean          loaded from backbone.body.layer3.11.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn2.running_var           loaded from backbone.body.layer3.11.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn2.weight                loaded from backbone.body.layer3.11.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn3.bias                  loaded from backbone.body.layer3.11.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn3.running_mean          loaded from backbone.body.layer3.11.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn3.running_var           loaded from backbone.body.layer3.11.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.bn3.weight                loaded from backbone.body.layer3.11.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.conv1.weight              loaded from backbone.body.layer3.11.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.conv2.weight              loaded from backbone.body.layer3.11.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.11.conv3.weight              loaded from backbone.body.layer3.11.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn1.bias                  loaded from backbone.body.layer3.12.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn1.running_mean          loaded from backbone.body.layer3.12.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn1.running_var           loaded from backbone.body.layer3.12.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn1.weight                loaded from backbone.body.layer3.12.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn2.bias                  loaded from backbone.body.layer3.12.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn2.running_mean          loaded from backbone.body.layer3.12.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,241 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn2.running_var           loaded from backbone.body.layer3.12.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn2.weight                loaded from backbone.body.layer3.12.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn3.bias                  loaded from backbone.body.layer3.12.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn3.running_mean          loaded from backbone.body.layer3.12.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn3.running_var           loaded from backbone.body.layer3.12.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.bn3.weight                loaded from backbone.body.layer3.12.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.conv1.weight              loaded from backbone.body.layer3.12.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.conv2.weight              loaded from backbone.body.layer3.12.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.12.conv3.weight              loaded from backbone.body.layer3.12.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn1.bias                  loaded from backbone.body.layer3.13.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn1.running_mean          loaded from backbone.body.layer3.13.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn1.running_var           loaded from backbone.body.layer3.13.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn1.weight                loaded from backbone.body.layer3.13.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn2.bias                  loaded from backbone.body.layer3.13.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn2.running_mean          loaded from backbone.body.layer3.13.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn2.running_var           loaded from backbone.body.layer3.13.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn2.weight                loaded from backbone.body.layer3.13.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn3.bias                  loaded from backbone.body.layer3.13.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn3.running_mean          loaded from backbone.body.layer3.13.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn3.running_var           loaded from backbone.body.layer3.13.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.bn3.weight                loaded from backbone.body.layer3.13.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.conv1.weight              loaded from backbone.body.layer3.13.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.conv2.weight              loaded from backbone.body.layer3.13.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,242 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.13.conv3.weight              loaded from backbone.body.layer3.13.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn1.bias                  loaded from backbone.body.layer3.14.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn1.running_mean          loaded from backbone.body.layer3.14.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn1.running_var           loaded from backbone.body.layer3.14.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn1.weight                loaded from backbone.body.layer3.14.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn2.bias                  loaded from backbone.body.layer3.14.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn2.running_mean          loaded from backbone.body.layer3.14.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn2.running_var           loaded from backbone.body.layer3.14.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn2.weight                loaded from backbone.body.layer3.14.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn3.bias                  loaded from backbone.body.layer3.14.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn3.running_mean          loaded from backbone.body.layer3.14.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn3.running_var           loaded from backbone.body.layer3.14.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.bn3.weight                loaded from backbone.body.layer3.14.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.conv1.weight              loaded from backbone.body.layer3.14.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.conv2.weight              loaded from backbone.body.layer3.14.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.14.conv3.weight              loaded from backbone.body.layer3.14.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn1.bias                  loaded from backbone.body.layer3.15.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn1.running_mean          loaded from backbone.body.layer3.15.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn1.running_var           loaded from backbone.body.layer3.15.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn1.weight                loaded from backbone.body.layer3.15.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn2.bias                  loaded from backbone.body.layer3.15.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn2.running_mean          loaded from backbone.body.layer3.15.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn2.running_var           loaded from backbone.body.layer3.15.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,243 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn2.weight                loaded from backbone.body.layer3.15.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn3.bias                  loaded from backbone.body.layer3.15.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn3.running_mean          loaded from backbone.body.layer3.15.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn3.running_var           loaded from backbone.body.layer3.15.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.bn3.weight                loaded from backbone.body.layer3.15.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.conv1.weight              loaded from backbone.body.layer3.15.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.conv2.weight              loaded from backbone.body.layer3.15.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.15.conv3.weight              loaded from backbone.body.layer3.15.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn1.bias                  loaded from backbone.body.layer3.16.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn1.running_mean          loaded from backbone.body.layer3.16.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn1.running_var           loaded from backbone.body.layer3.16.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn1.weight                loaded from backbone.body.layer3.16.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn2.bias                  loaded from backbone.body.layer3.16.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn2.running_mean          loaded from backbone.body.layer3.16.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn2.running_var           loaded from backbone.body.layer3.16.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn2.weight                loaded from backbone.body.layer3.16.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn3.bias                  loaded from backbone.body.layer3.16.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn3.running_mean          loaded from backbone.body.layer3.16.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn3.running_var           loaded from backbone.body.layer3.16.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.bn3.weight                loaded from backbone.body.layer3.16.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.conv1.weight              loaded from backbone.body.layer3.16.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.conv2.weight              loaded from backbone.body.layer3.16.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,244 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.16.conv3.weight              loaded from backbone.body.layer3.16.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn1.bias                  loaded from backbone.body.layer3.17.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn1.running_mean          loaded from backbone.body.layer3.17.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn1.running_var           loaded from backbone.body.layer3.17.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn1.weight                loaded from backbone.body.layer3.17.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn2.bias                  loaded from backbone.body.layer3.17.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn2.running_mean          loaded from backbone.body.layer3.17.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn2.running_var           loaded from backbone.body.layer3.17.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn2.weight                loaded from backbone.body.layer3.17.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn3.bias                  loaded from backbone.body.layer3.17.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn3.running_mean          loaded from backbone.body.layer3.17.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn3.running_var           loaded from backbone.body.layer3.17.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.bn3.weight                loaded from backbone.body.layer3.17.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.conv1.weight              loaded from backbone.body.layer3.17.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.conv2.weight              loaded from backbone.body.layer3.17.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.17.conv3.weight              loaded from backbone.body.layer3.17.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn1.bias                  loaded from backbone.body.layer3.18.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn1.running_mean          loaded from backbone.body.layer3.18.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn1.running_var           loaded from backbone.body.layer3.18.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn1.weight                loaded from backbone.body.layer3.18.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn2.bias                  loaded from backbone.body.layer3.18.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn2.running_mean          loaded from backbone.body.layer3.18.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn2.running_var           loaded from backbone.body.layer3.18.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,245 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn2.weight                loaded from backbone.body.layer3.18.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn3.bias                  loaded from backbone.body.layer3.18.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn3.running_mean          loaded from backbone.body.layer3.18.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn3.running_var           loaded from backbone.body.layer3.18.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.bn3.weight                loaded from backbone.body.layer3.18.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.conv1.weight              loaded from backbone.body.layer3.18.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.conv2.weight              loaded from backbone.body.layer3.18.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.18.conv3.weight              loaded from backbone.body.layer3.18.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn1.bias                  loaded from backbone.body.layer3.19.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn1.running_mean          loaded from backbone.body.layer3.19.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn1.running_var           loaded from backbone.body.layer3.19.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn1.weight                loaded from backbone.body.layer3.19.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn2.bias                  loaded from backbone.body.layer3.19.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn2.running_mean          loaded from backbone.body.layer3.19.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn2.running_var           loaded from backbone.body.layer3.19.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn2.weight                loaded from backbone.body.layer3.19.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn3.bias                  loaded from backbone.body.layer3.19.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn3.running_mean          loaded from backbone.body.layer3.19.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn3.running_var           loaded from backbone.body.layer3.19.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,246 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.bn3.weight                loaded from backbone.body.layer3.19.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,262 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.conv1.weight              loaded from backbone.body.layer3.19.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.conv2.weight              loaded from backbone.body.layer3.19.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.19.conv3.weight              loaded from backbone.body.layer3.19.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn1.bias                   loaded from backbone.body.layer3.2.bn1.bias                   of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn1.running_mean           loaded from backbone.body.layer3.2.bn1.running_mean           of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn1.running_var            loaded from backbone.body.layer3.2.bn1.running_var            of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn1.weight                 loaded from backbone.body.layer3.2.bn1.weight                 of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn2.bias                   loaded from backbone.body.layer3.2.bn2.bias                   of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn2.running_mean           loaded from backbone.body.layer3.2.bn2.running_mean           of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn2.running_var            loaded from backbone.body.layer3.2.bn2.running_var            of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn2.weight                 loaded from backbone.body.layer3.2.bn2.weight                 of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn3.bias                   loaded from backbone.body.layer3.2.bn3.bias                   of shape (1024,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn3.running_mean           loaded from backbone.body.layer3.2.bn3.running_mean           of shape (1024,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn3.running_var            loaded from backbone.body.layer3.2.bn3.running_var            of shape (1024,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.bn3.weight                 loaded from backbone.body.layer3.2.bn3.weight                 of shape (1024,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.conv1.weight               loaded from backbone.body.layer3.2.conv1.weight               of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.conv2.weight               loaded from backbone.body.layer3.2.conv2.weight               of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.2.conv3.weight               loaded from backbone.body.layer3.2.conv3.weight               of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn1.bias                  loaded from backbone.body.layer3.20.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn1.running_mean          loaded from backbone.body.layer3.20.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn1.running_var           loaded from backbone.body.layer3.20.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn1.weight                loaded from backbone.body.layer3.20.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,263 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn2.bias                  loaded from backbone.body.layer3.20.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn2.running_mean          loaded from backbone.body.layer3.20.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn2.running_var           loaded from backbone.body.layer3.20.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn2.weight                loaded from backbone.body.layer3.20.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn3.bias                  loaded from backbone.body.layer3.20.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn3.running_mean          loaded from backbone.body.layer3.20.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn3.running_var           loaded from backbone.body.layer3.20.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.bn3.weight                loaded from backbone.body.layer3.20.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.conv1.weight              loaded from backbone.body.layer3.20.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.conv2.weight              loaded from backbone.body.layer3.20.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.20.conv3.weight              loaded from backbone.body.layer3.20.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn1.bias                  loaded from backbone.body.layer3.21.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn1.running_mean          loaded from backbone.body.layer3.21.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn1.running_var           loaded from backbone.body.layer3.21.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn1.weight                loaded from backbone.body.layer3.21.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn2.bias                  loaded from backbone.body.layer3.21.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn2.running_mean          loaded from backbone.body.layer3.21.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn2.running_var           loaded from backbone.body.layer3.21.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn2.weight                loaded from backbone.body.layer3.21.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn3.bias                  loaded from backbone.body.layer3.21.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn3.running_mean          loaded from backbone.body.layer3.21.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,264 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn3.running_var           loaded from backbone.body.layer3.21.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.bn3.weight                loaded from backbone.body.layer3.21.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.conv1.weight              loaded from backbone.body.layer3.21.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.conv2.weight              loaded from backbone.body.layer3.21.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.21.conv3.weight              loaded from backbone.body.layer3.21.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn1.bias                  loaded from backbone.body.layer3.22.bn1.bias                  of shape (256,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn1.running_mean          loaded from backbone.body.layer3.22.bn1.running_mean          of shape (256,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn1.running_var           loaded from backbone.body.layer3.22.bn1.running_var           of shape (256,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn1.weight                loaded from backbone.body.layer3.22.bn1.weight                of shape (256,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn2.bias                  loaded from backbone.body.layer3.22.bn2.bias                  of shape (256,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn2.running_mean          loaded from backbone.body.layer3.22.bn2.running_mean          of shape (256,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn2.running_var           loaded from backbone.body.layer3.22.bn2.running_var           of shape (256,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn2.weight                loaded from backbone.body.layer3.22.bn2.weight                of shape (256,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn3.bias                  loaded from backbone.body.layer3.22.bn3.bias                  of shape (1024,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn3.running_mean          loaded from backbone.body.layer3.22.bn3.running_mean          of shape (1024,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn3.running_var           loaded from backbone.body.layer3.22.bn3.running_var           of shape (1024,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.bn3.weight                loaded from backbone.body.layer3.22.bn3.weight                of shape (1024,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.conv1.weight              loaded from backbone.body.layer3.22.conv1.weight              of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.conv2.weight              loaded from backbone.body.layer3.22.conv2.weight              of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.22.conv3.weight              loaded from backbone.body.layer3.22.conv3.weight              of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn1.bias                   loaded from backbone.body.layer3.3.bn1.bias                   of shape (256,)
+2018-11-27 15:26:59,265 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn1.running_mean           loaded from backbone.body.layer3.3.bn1.running_mean           of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn1.running_var            loaded from backbone.body.layer3.3.bn1.running_var            of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn1.weight                 loaded from backbone.body.layer3.3.bn1.weight                 of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn2.bias                   loaded from backbone.body.layer3.3.bn2.bias                   of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn2.running_mean           loaded from backbone.body.layer3.3.bn2.running_mean           of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn2.running_var            loaded from backbone.body.layer3.3.bn2.running_var            of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn2.weight                 loaded from backbone.body.layer3.3.bn2.weight                 of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn3.bias                   loaded from backbone.body.layer3.3.bn3.bias                   of shape (1024,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn3.running_mean           loaded from backbone.body.layer3.3.bn3.running_mean           of shape (1024,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn3.running_var            loaded from backbone.body.layer3.3.bn3.running_var            of shape (1024,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.bn3.weight                 loaded from backbone.body.layer3.3.bn3.weight                 of shape (1024,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.conv1.weight               loaded from backbone.body.layer3.3.conv1.weight               of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.conv2.weight               loaded from backbone.body.layer3.3.conv2.weight               of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.3.conv3.weight               loaded from backbone.body.layer3.3.conv3.weight               of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn1.bias                   loaded from backbone.body.layer3.4.bn1.bias                   of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn1.running_mean           loaded from backbone.body.layer3.4.bn1.running_mean           of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn1.running_var            loaded from backbone.body.layer3.4.bn1.running_var            of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn1.weight                 loaded from backbone.body.layer3.4.bn1.weight                 of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn2.bias                   loaded from backbone.body.layer3.4.bn2.bias                   of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn2.running_mean           loaded from backbone.body.layer3.4.bn2.running_mean           of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn2.running_var            loaded from backbone.body.layer3.4.bn2.running_var            of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn2.weight                 loaded from backbone.body.layer3.4.bn2.weight                 of shape (256,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn3.bias                   loaded from backbone.body.layer3.4.bn3.bias                   of shape (1024,)
+2018-11-27 15:26:59,266 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn3.running_mean           loaded from backbone.body.layer3.4.bn3.running_mean           of shape (1024,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn3.running_var            loaded from backbone.body.layer3.4.bn3.running_var            of shape (1024,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.bn3.weight                 loaded from backbone.body.layer3.4.bn3.weight                 of shape (1024,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.conv1.weight               loaded from backbone.body.layer3.4.conv1.weight               of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.conv2.weight               loaded from backbone.body.layer3.4.conv2.weight               of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.4.conv3.weight               loaded from backbone.body.layer3.4.conv3.weight               of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn1.bias                   loaded from backbone.body.layer3.5.bn1.bias                   of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn1.running_mean           loaded from backbone.body.layer3.5.bn1.running_mean           of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn1.running_var            loaded from backbone.body.layer3.5.bn1.running_var            of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn1.weight                 loaded from backbone.body.layer3.5.bn1.weight                 of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn2.bias                   loaded from backbone.body.layer3.5.bn2.bias                   of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn2.running_mean           loaded from backbone.body.layer3.5.bn2.running_mean           of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn2.running_var            loaded from backbone.body.layer3.5.bn2.running_var            of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn2.weight                 loaded from backbone.body.layer3.5.bn2.weight                 of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn3.bias                   loaded from backbone.body.layer3.5.bn3.bias                   of shape (1024,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn3.running_mean           loaded from backbone.body.layer3.5.bn3.running_mean           of shape (1024,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn3.running_var            loaded from backbone.body.layer3.5.bn3.running_var            of shape (1024,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.bn3.weight                 loaded from backbone.body.layer3.5.bn3.weight                 of shape (1024,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.conv1.weight               loaded from backbone.body.layer3.5.conv1.weight               of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.conv2.weight               loaded from backbone.body.layer3.5.conv2.weight               of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.5.conv3.weight               loaded from backbone.body.layer3.5.conv3.weight               of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn1.bias                   loaded from backbone.body.layer3.6.bn1.bias                   of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn1.running_mean           loaded from backbone.body.layer3.6.bn1.running_mean           of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn1.running_var            loaded from backbone.body.layer3.6.bn1.running_var            of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn1.weight                 loaded from backbone.body.layer3.6.bn1.weight                 of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn2.bias                   loaded from backbone.body.layer3.6.bn2.bias                   of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn2.running_mean           loaded from backbone.body.layer3.6.bn2.running_mean           of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn2.running_var            loaded from backbone.body.layer3.6.bn2.running_var            of shape (256,)
+2018-11-27 15:26:59,267 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn2.weight                 loaded from backbone.body.layer3.6.bn2.weight                 of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn3.bias                   loaded from backbone.body.layer3.6.bn3.bias                   of shape (1024,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn3.running_mean           loaded from backbone.body.layer3.6.bn3.running_mean           of shape (1024,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn3.running_var            loaded from backbone.body.layer3.6.bn3.running_var            of shape (1024,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.bn3.weight                 loaded from backbone.body.layer3.6.bn3.weight                 of shape (1024,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.conv1.weight               loaded from backbone.body.layer3.6.conv1.weight               of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.conv2.weight               loaded from backbone.body.layer3.6.conv2.weight               of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.6.conv3.weight               loaded from backbone.body.layer3.6.conv3.weight               of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn1.bias                   loaded from backbone.body.layer3.7.bn1.bias                   of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn1.running_mean           loaded from backbone.body.layer3.7.bn1.running_mean           of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn1.running_var            loaded from backbone.body.layer3.7.bn1.running_var            of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn1.weight                 loaded from backbone.body.layer3.7.bn1.weight                 of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn2.bias                   loaded from backbone.body.layer3.7.bn2.bias                   of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn2.running_mean           loaded from backbone.body.layer3.7.bn2.running_mean           of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn2.running_var            loaded from backbone.body.layer3.7.bn2.running_var            of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn2.weight                 loaded from backbone.body.layer3.7.bn2.weight                 of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn3.bias                   loaded from backbone.body.layer3.7.bn3.bias                   of shape (1024,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn3.running_mean           loaded from backbone.body.layer3.7.bn3.running_mean           of shape (1024,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn3.running_var            loaded from backbone.body.layer3.7.bn3.running_var            of shape (1024,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.bn3.weight                 loaded from backbone.body.layer3.7.bn3.weight                 of shape (1024,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.conv1.weight               loaded from backbone.body.layer3.7.conv1.weight               of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.conv2.weight               loaded from backbone.body.layer3.7.conv2.weight               of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.7.conv3.weight               loaded from backbone.body.layer3.7.conv3.weight               of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn1.bias                   loaded from backbone.body.layer3.8.bn1.bias                   of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn1.running_mean           loaded from backbone.body.layer3.8.bn1.running_mean           of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn1.running_var            loaded from backbone.body.layer3.8.bn1.running_var            of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn1.weight                 loaded from backbone.body.layer3.8.bn1.weight                 of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn2.bias                   loaded from backbone.body.layer3.8.bn2.bias                   of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn2.running_mean           loaded from backbone.body.layer3.8.bn2.running_mean           of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn2.running_var            loaded from backbone.body.layer3.8.bn2.running_var            of shape (256,)
+2018-11-27 15:26:59,268 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn2.weight                 loaded from backbone.body.layer3.8.bn2.weight                 of shape (256,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn3.bias                   loaded from backbone.body.layer3.8.bn3.bias                   of shape (1024,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn3.running_mean           loaded from backbone.body.layer3.8.bn3.running_mean           of shape (1024,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn3.running_var            loaded from backbone.body.layer3.8.bn3.running_var            of shape (1024,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.bn3.weight                 loaded from backbone.body.layer3.8.bn3.weight                 of shape (1024,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.conv1.weight               loaded from backbone.body.layer3.8.conv1.weight               of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.conv2.weight               loaded from backbone.body.layer3.8.conv2.weight               of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.8.conv3.weight               loaded from backbone.body.layer3.8.conv3.weight               of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn1.bias                   loaded from backbone.body.layer3.9.bn1.bias                   of shape (256,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn1.running_mean           loaded from backbone.body.layer3.9.bn1.running_mean           of shape (256,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn1.running_var            loaded from backbone.body.layer3.9.bn1.running_var            of shape (256,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn1.weight                 loaded from backbone.body.layer3.9.bn1.weight                 of shape (256,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn2.bias                   loaded from backbone.body.layer3.9.bn2.bias                   of shape (256,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn2.running_mean           loaded from backbone.body.layer3.9.bn2.running_mean           of shape (256,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn2.running_var            loaded from backbone.body.layer3.9.bn2.running_var            of shape (256,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn2.weight                 loaded from backbone.body.layer3.9.bn2.weight                 of shape (256,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn3.bias                   loaded from backbone.body.layer3.9.bn3.bias                   of shape (1024,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn3.running_mean           loaded from backbone.body.layer3.9.bn3.running_mean           of shape (1024,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn3.running_var            loaded from backbone.body.layer3.9.bn3.running_var            of shape (1024,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.bn3.weight                 loaded from backbone.body.layer3.9.bn3.weight                 of shape (1024,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.conv1.weight               loaded from backbone.body.layer3.9.conv1.weight               of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.conv2.weight               loaded from backbone.body.layer3.9.conv2.weight               of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer3.9.conv3.weight               loaded from backbone.body.layer3.9.conv3.weight               of shape (1024, 256, 1, 1)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn1.bias                   loaded from backbone.body.layer4.0.bn1.bias                   of shape (512,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn1.running_mean           loaded from backbone.body.layer4.0.bn1.running_mean           of shape (512,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn1.running_var            loaded from backbone.body.layer4.0.bn1.running_var            of shape (512,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn1.weight                 loaded from backbone.body.layer4.0.bn1.weight                 of shape (512,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn2.bias                   loaded from backbone.body.layer4.0.bn2.bias                   of shape (512,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn2.running_mean           loaded from backbone.body.layer4.0.bn2.running_mean           of shape (512,)
+2018-11-27 15:26:59,269 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn2.running_var            loaded from backbone.body.layer4.0.bn2.running_var            of shape (512,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn2.weight                 loaded from backbone.body.layer4.0.bn2.weight                 of shape (512,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn3.bias                   loaded from backbone.body.layer4.0.bn3.bias                   of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn3.running_mean           loaded from backbone.body.layer4.0.bn3.running_mean           of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn3.running_var            loaded from backbone.body.layer4.0.bn3.running_var            of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.bn3.weight                 loaded from backbone.body.layer4.0.bn3.weight                 of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.conv1.weight               loaded from backbone.body.layer4.0.conv1.weight               of shape (512, 1024, 1, 1)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.conv2.weight               loaded from backbone.body.layer4.0.conv2.weight               of shape (512, 512, 3, 3)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.conv3.weight               loaded from backbone.body.layer4.0.conv3.weight               of shape (2048, 512, 1, 1)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.downsample.0.weight        loaded from backbone.body.layer4.0.downsample.0.weight        of shape (2048, 1024, 1, 1)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.downsample.1.bias          loaded from backbone.body.layer4.0.downsample.1.bias          of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.downsample.1.running_mean  loaded from backbone.body.layer4.0.downsample.1.running_mean  of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.downsample.1.running_var   loaded from backbone.body.layer4.0.downsample.1.running_var   of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.0.downsample.1.weight        loaded from backbone.body.layer4.0.downsample.1.weight        of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn1.bias                   loaded from backbone.body.layer4.1.bn1.bias                   of shape (512,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn1.running_mean           loaded from backbone.body.layer4.1.bn1.running_mean           of shape (512,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn1.running_var            loaded from backbone.body.layer4.1.bn1.running_var            of shape (512,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn1.weight                 loaded from backbone.body.layer4.1.bn1.weight                 of shape (512,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn2.bias                   loaded from backbone.body.layer4.1.bn2.bias                   of shape (512,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn2.running_mean           loaded from backbone.body.layer4.1.bn2.running_mean           of shape (512,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn2.running_var            loaded from backbone.body.layer4.1.bn2.running_var            of shape (512,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn2.weight                 loaded from backbone.body.layer4.1.bn2.weight                 of shape (512,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn3.bias                   loaded from backbone.body.layer4.1.bn3.bias                   of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn3.running_mean           loaded from backbone.body.layer4.1.bn3.running_mean           of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn3.running_var            loaded from backbone.body.layer4.1.bn3.running_var            of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.bn3.weight                 loaded from backbone.body.layer4.1.bn3.weight                 of shape (2048,)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.conv1.weight               loaded from backbone.body.layer4.1.conv1.weight               of shape (512, 2048, 1, 1)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.conv2.weight               loaded from backbone.body.layer4.1.conv2.weight               of shape (512, 512, 3, 3)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.1.conv3.weight               loaded from backbone.body.layer4.1.conv3.weight               of shape (2048, 512, 1, 1)
+2018-11-27 15:26:59,270 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn1.bias                   loaded from backbone.body.layer4.2.bn1.bias                   of shape (512,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn1.running_mean           loaded from backbone.body.layer4.2.bn1.running_mean           of shape (512,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn1.running_var            loaded from backbone.body.layer4.2.bn1.running_var            of shape (512,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn1.weight                 loaded from backbone.body.layer4.2.bn1.weight                 of shape (512,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn2.bias                   loaded from backbone.body.layer4.2.bn2.bias                   of shape (512,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn2.running_mean           loaded from backbone.body.layer4.2.bn2.running_mean           of shape (512,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn2.running_var            loaded from backbone.body.layer4.2.bn2.running_var            of shape (512,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn2.weight                 loaded from backbone.body.layer4.2.bn2.weight                 of shape (512,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn3.bias                   loaded from backbone.body.layer4.2.bn3.bias                   of shape (2048,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn3.running_mean           loaded from backbone.body.layer4.2.bn3.running_mean           of shape (2048,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn3.running_var            loaded from backbone.body.layer4.2.bn3.running_var            of shape (2048,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.bn3.weight                 loaded from backbone.body.layer4.2.bn3.weight                 of shape (2048,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.conv1.weight               loaded from backbone.body.layer4.2.conv1.weight               of shape (512, 2048, 1, 1)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.conv2.weight               loaded from backbone.body.layer4.2.conv2.weight               of shape (512, 512, 3, 3)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.layer4.2.conv3.weight               loaded from backbone.body.layer4.2.conv3.weight               of shape (2048, 512, 1, 1)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.stem.bn1.bias                       loaded from backbone.body.stem.bn1.bias                       of shape (64,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.stem.bn1.running_mean               loaded from backbone.body.stem.bn1.running_mean               of shape (64,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.stem.bn1.running_var                loaded from backbone.body.stem.bn1.running_var                of shape (64,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.stem.bn1.weight                     loaded from backbone.body.stem.bn1.weight                     of shape (64,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.body.stem.conv1.weight                   loaded from backbone.body.stem.conv1.weight                   of shape (64, 3, 7, 7)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_inner1.bias                      loaded from backbone.fpn.fpn_inner1.bias                      of shape (256,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_inner1.weight                    loaded from backbone.fpn.fpn_inner1.weight                    of shape (256, 256, 1, 1)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_inner2.bias                      loaded from backbone.fpn.fpn_inner2.bias                      of shape (256,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_inner2.weight                    loaded from backbone.fpn.fpn_inner2.weight                    of shape (256, 512, 1, 1)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_inner3.bias                      loaded from backbone.fpn.fpn_inner3.bias                      of shape (256,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_inner3.weight                    loaded from backbone.fpn.fpn_inner3.weight                    of shape (256, 1024, 1, 1)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_inner4.bias                      loaded from backbone.fpn.fpn_inner4.bias                      of shape (256,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_inner4.weight                    loaded from backbone.fpn.fpn_inner4.weight                    of shape (256, 2048, 1, 1)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_layer1.bias                      loaded from backbone.fpn.fpn_layer1.bias                      of shape (256,)
+2018-11-27 15:26:59,271 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_layer1.weight                    loaded from backbone.fpn.fpn_layer1.weight                    of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_layer2.bias                      loaded from backbone.fpn.fpn_layer2.bias                      of shape (256,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_layer2.weight                    loaded from backbone.fpn.fpn_layer2.weight                    of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_layer3.bias                      loaded from backbone.fpn.fpn_layer3.bias                      of shape (256,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_layer3.weight                    loaded from backbone.fpn.fpn_layer3.weight                    of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_layer4.bias                      loaded from backbone.fpn.fpn_layer4.bias                      of shape (256,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: backbone.fpn.fpn_layer4.weight                    loaded from backbone.fpn.fpn_layer4.weight                    of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.box.feature_extractor.fc6.bias          loaded from roi_heads.box.feature_extractor.fc6.bias          of shape (1024,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.box.feature_extractor.fc6.weight        loaded from roi_heads.box.feature_extractor.fc6.weight        of shape (1024, 12544)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.box.feature_extractor.fc7.bias          loaded from roi_heads.box.feature_extractor.fc7.bias          of shape (1024,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.box.feature_extractor.fc7.weight        loaded from roi_heads.box.feature_extractor.fc7.weight        of shape (1024, 1024)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.box.predictor.bbox_pred.bias            loaded from roi_heads.box.predictor.bbox_pred.bias            of shape (324,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.box.predictor.bbox_pred.weight          loaded from roi_heads.box.predictor.bbox_pred.weight          of shape (324, 1024)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.box.predictor.cls_score.bias            loaded from roi_heads.box.predictor.cls_score.bias            of shape (81,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.box.predictor.cls_score.weight          loaded from roi_heads.box.predictor.cls_score.weight          of shape (81, 1024)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.feature_extractor.mask_fcn1.bias   loaded from roi_heads.mask.feature_extractor.mask_fcn1.bias   of shape (256,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.feature_extractor.mask_fcn1.weight loaded from roi_heads.mask.feature_extractor.mask_fcn1.weight of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.feature_extractor.mask_fcn2.bias   loaded from roi_heads.mask.feature_extractor.mask_fcn2.bias   of shape (256,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.feature_extractor.mask_fcn2.weight loaded from roi_heads.mask.feature_extractor.mask_fcn2.weight of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.feature_extractor.mask_fcn3.bias   loaded from roi_heads.mask.feature_extractor.mask_fcn3.bias   of shape (256,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.feature_extractor.mask_fcn3.weight loaded from roi_heads.mask.feature_extractor.mask_fcn3.weight of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.feature_extractor.mask_fcn4.bias   loaded from roi_heads.mask.feature_extractor.mask_fcn4.bias   of shape (256,)
+2018-11-27 15:26:59,272 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.feature_extractor.mask_fcn4.weight loaded from roi_heads.mask.feature_extractor.mask_fcn4.weight of shape (256, 256, 3, 3)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.predictor.conv5_mask.bias          loaded from roi_heads.mask.predictor.conv5_mask.bias          of shape (256,)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.predictor.conv5_mask.weight        loaded from roi_heads.mask.predictor.conv5_mask.weight        of shape (256, 256, 2, 2)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.predictor.mask_fcn_logits.bias     loaded from roi_heads.mask.predictor.mask_fcn_logits.bias     of shape (81,)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: roi_heads.mask.predictor.mask_fcn_logits.weight   loaded from roi_heads.mask.predictor.mask_fcn_logits.weight   of shape (81, 256, 1, 1)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.anchor_generator.cell_anchors.0               loaded from rpn.anchor_generator.cell_anchors.0               of shape (3, 4)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.anchor_generator.cell_anchors.1               loaded from rpn.anchor_generator.cell_anchors.1               of shape (3, 4)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.anchor_generator.cell_anchors.2               loaded from rpn.anchor_generator.cell_anchors.2               of shape (3, 4)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.anchor_generator.cell_anchors.3               loaded from rpn.anchor_generator.cell_anchors.3               of shape (3, 4)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.anchor_generator.cell_anchors.4               loaded from rpn.anchor_generator.cell_anchors.4               of shape (3, 4)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.head.bbox_pred.bias                           loaded from rpn.head.bbox_pred.bias                           of shape (12,)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.head.bbox_pred.weight                         loaded from rpn.head.bbox_pred.weight                         of shape (12, 256, 1, 1)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.head.cls_logits.bias                          loaded from rpn.head.cls_logits.bias                          of shape (3,)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.head.cls_logits.weight                        loaded from rpn.head.cls_logits.weight                        of shape (3, 256, 1, 1)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.head.conv.bias                                loaded from rpn.head.conv.bias                                of shape (256,)
+2018-11-27 15:26:59,273 maskrcnn_benchmark.utils.model_serialization INFO: rpn.head.conv.weight                              loaded from rpn.head.conv.weight                              of shape (256, 256, 3, 3)
+loading annotations into memory...loading annotations into memory...
+
+Done (t=0.02s)
+creating index...
+Done (t=0.02s)
+creating index...
+index created!
+index created!
+2018-11-27 15:27:00,026 maskrcnn_benchmark.inference INFO: Start evaluation on 335 images
+0it [00:00, ?it/s]0it [00:00, ?it/s]1it [00:01,  1.89s/it]1it [00:02,  2.40s/it]2it [00:02,  1.50s/it]2it [00:02,  1.82s/it]3it [00:03,  1.21s/it]3it [00:03,  1.42s/it]4it [00:03,  1.03it/s]4it [00:03,  1.07s/it]5it [00:03,  1.19it/s]5it [00:03,  1.22it/s]6it [00:04,  1.44it/s]6it [00:04,  1.39it/s]7it [00:04,  1.66it/s]7it [00:04,  1.64it/s]8it [00:05,  1.91it/s]8it [00:05,  1.89it/s]9it [00:05,  2.12it/s]9it [00:05,  2.05it/s]10it [00:05,  2.29it/s]10it [00:05,  2.14it/s]11it [00:06,  2.51it/s]11it [00:06,  2.25it/s]12it [00:06,  2.61it/s]12it [00:06,  2.35it/s]13it [00:06,  2.69it/s]13it [00:06,  2.46it/s]14it [00:07,  2.64it/s]14it [00:07,  2.70it/s]15it [00:07,  2.86it/s]15it [00:07,  2.70it/s]16it [00:07,  2.77it/s]16it [00:07,  2.79it/s]17it [00:08,  2.63it/s]17it [00:08,  2.93it/s]18it [00:08,  2.64it/s]18it [00:08,  2.88it/s]19it [00:08,  2.63it/s]19it [00:09,  2.81it/s]20it [00:09,  2.88it/s]20it [00:09,  2.52it/s]21it [00:09,  2.79it/s]21it [00:09,  2.55it/s]22it [00:10,  2.72it/s]22it [00:10,  2.69it/s]23it [00:10,  2.90it/s]23it [00:10,  2.54it/s]24it [00:10,  2.79it/s]24it [00:10,  2.83it/s]25it [00:11,  3.00it/s]25it [00:11,  2.68it/s]26it [00:11,  2.90it/s]26it [00:11,  2.64it/s]27it [00:11,  3.29it/s]27it [00:12,  2.55it/s]28it [00:12,  3.06it/s]28it [00:12,  2.53it/s]29it [00:12,  2.95it/s]29it [00:12,  2.73it/s]30it [00:12,  3.02it/s]31it [00:13,  3.08it/s]30it [00:13,  2.63it/s]32it [00:13,  3.18it/s]31it [00:13,  2.71it/s]33it [00:13,  3.18it/s]32it [00:13,  2.61it/s]34it [00:14,  3.03it/s]33it [00:14,  2.89it/s]35it [00:14,  3.09it/s]34it [00:14,  2.84it/s]36it [00:14,  3.26it/s]35it [00:14,  2.75it/s]37it [00:14,  3.08it/s]38it [00:15,  3.43it/s]36it [00:15,  2.60it/s]39it [00:15,  3.29it/s]37it [00:15,  2.74it/s]40it [00:15,  3.21it/s]38it [00:16,  2.60it/s]41it [00:16,  3.47it/s]42it [00:16,  3.43it/s]39it [00:16,  2.46it/s]43it [00:16,  3.41it/s]40it [00:16,  2.42it/s]44it [00:17,  2.96it/s]41it [00:17,  2.69it/s]45it [00:17,  3.22it/s]42it [00:17,  2.76it/s]46it [00:17,  3.09it/s]43it [00:17,  2.69it/s]47it [00:18,  3.20it/s]48it [00:18,  3.28it/s]44it [00:18,  2.61it/s]49it [00:18,  3.17it/s]45it [00:18,  2.74it/s]50it [00:19,  3.01it/s]46it [00:19,  2.78it/s]51it [00:19,  2.96it/s]47it [00:19,  2.78it/s]52it [00:19,  3.13it/s]48it [00:19,  2.83it/s]53it [00:19,  3.30it/s]49it [00:20,  2.63it/s]54it [00:20,  2.95it/s]50it [00:20,  2.92it/s]55it [00:20,  2.95it/s]51it [00:20,  2.94it/s]56it [00:20,  3.08it/s]52it [00:21,  2.91it/s]57it [00:21,  3.25it/s]53it [00:21,  3.00it/s]58it [00:21,  3.13it/s]54it [00:21,  2.89it/s]59it [00:22,  2.81it/s]55it [00:22,  3.01it/s]60it [00:22,  2.85it/s]56it [00:22,  3.09it/s]61it [00:22,  2.90it/s]57it [00:22,  2.98it/s]58it [00:23,  3.16it/s]62it [00:23,  2.84it/s]63it [00:23,  2.84it/s]59it [00:23,  2.98it/s]60it [00:23,  3.02it/s]64it [00:23,  2.74it/s]65it [00:24,  2.84it/s]61it [00:24,  2.90it/s]62it [00:24,  3.29it/s]66it [00:24,  2.71it/s]63it [00:24,  3.03it/s]67it [00:24,  2.61it/s]64it [00:25,  3.02it/s]68it [00:25,  2.80it/s]65it [00:25,  3.16it/s]69it [00:25,  3.00it/s]66it [00:25,  3.04it/s]70it [00:25,  2.81it/s]67it [00:26,  2.86it/s]71it [00:26,  2.96it/s]68it [00:26,  2.82it/s]72it [00:26,  3.02it/s]69it [00:26,  3.02it/s]73it [00:26,  3.04it/s]70it [00:27,  3.04it/s]74it [00:27,  2.81it/s]71it [00:27,  2.88it/s]75it [00:27,  2.65it/s]72it [00:27,  2.89it/s]76it [00:28,  2.72it/s]73it [00:28,  2.88it/s]77it [00:28,  2.75it/s]74it [00:28,  2.82it/s]75it [00:28,  3.30it/s]78it [00:28,  2.78it/s]76it [00:29,  3.28it/s]79it [00:29,  2.69it/s]77it [00:29,  3.03it/s]80it [00:29,  2.67it/s]78it [00:29,  3.15it/s]81it [00:29,  2.60it/s]79it [00:30,  2.93it/s]82it [00:30,  2.61it/s]80it [00:30,  2.92it/s]83it [00:30,  2.96it/s]81it [00:30,  2.86it/s]84it [00:30,  3.09it/s]82it [00:31,  2.94it/s]85it [00:31,  3.19it/s]83it [00:31,  2.84it/s]86it [00:31,  3.01it/s]84it [00:31,  2.81it/s]87it [00:31,  2.94it/s]88it [00:32,  3.07it/s]85it [00:32,  2.91it/s]86it [00:32,  3.00it/s]89it [00:32,  2.91it/s]87it [00:32,  2.96it/s]90it [00:32,  2.84it/s]88it [00:33,  3.07it/s]91it [00:33,  2.78it/s]89it [00:33,  3.24it/s]92it [00:33,  2.83it/s]90it [00:33,  3.13it/s]93it [00:34,  2.75it/s]91it [00:34,  3.04it/s]94it [00:34,  2.80it/s]92it [00:34,  2.95it/s]95it [00:34,  2.95it/s]93it [00:34,  2.98it/s]96it [00:34,  3.14it/s]94it [00:35,  2.93it/s]97it [00:35,  3.15it/s]95it [00:35,  3.00it/s]98it [00:35,  3.02it/s]96it [00:35,  2.84it/s]99it [00:36,  2.89it/s]97it [00:36,  3.04it/s]100it [00:36,  2.94it/s]98it [00:36,  2.95it/s]101it [00:36,  2.83it/s]99it [00:36,  2.98it/s]102it [00:37,  2.90it/s]100it [00:37,  2.90it/s]103it [00:37,  2.96it/s]101it [00:37,  2.87it/s]104it [00:37,  3.31it/s]102it [00:37,  2.80it/s]105it [00:38,  2.97it/s]103it [00:38,  2.93it/s]106it [00:38,  3.04it/s]104it [00:38,  2.88it/s]107it [00:38,  2.84it/s]105it [00:38,  2.78it/s]108it [00:39,  2.95it/s]109it [00:39,  3.05it/s]106it [00:39,  2.74it/s]110it [00:39,  3.11it/s]107it [00:39,  2.74it/s]111it [00:40,  2.99it/s]108it [00:40,  2.68it/s]112it [00:40,  2.90it/s]109it [00:40,  2.96it/s]110it [00:40,  3.02it/s]113it [00:40,  2.90it/s]114it [00:41,  2.93it/s]111it [00:41,  2.91it/s]115it [00:41,  3.06it/s]112it [00:41,  2.79it/s]116it [00:41,  3.05it/s]113it [00:41,  2.72it/s]117it [00:42,  2.90it/s]114it [00:42,  3.00it/s]118it [00:42,  2.87it/s]115it [00:42,  2.93it/s]119it [00:42,  2.84it/s]116it [00:42,  2.99it/s]120it [00:43,  2.91it/s]117it [00:43,  2.98it/s]121it [00:43,  3.19it/s]118it [00:43,  2.78it/s]122it [00:43,  3.18it/s]119it [00:43,  2.82it/s]123it [00:44,  3.04it/s]120it [00:44,  2.87it/s]124it [00:44,  3.04it/s]121it [00:44,  2.85it/s]125it [00:44,  3.18it/s]122it [00:44,  2.77it/s]126it [00:44,  3.10it/s]127it [00:45,  3.11it/s]123it [00:45,  2.74it/s]124it [00:45,  2.96it/s]128it [00:45,  3.06it/s]125it [00:45,  3.08it/s]129it [00:46,  2.70it/s]126it [00:46,  2.91it/s]130it [00:46,  2.79it/s]127it [00:46,  2.93it/s]131it [00:46,  2.81it/s]128it [00:47,  2.82it/s]132it [00:47,  2.89it/s]129it [00:47,  2.74it/s]133it [00:47,  2.87it/s]130it [00:47,  2.85it/s]134it [00:47,  3.01it/s]131it [00:48,  2.98it/s]135it [00:48,  2.76it/s]132it [00:48,  2.99it/s]136it [00:48,  2.80it/s]133it [00:48,  3.14it/s]134it [00:48,  3.35it/s]137it [00:48,  2.64it/s]135it [00:49,  3.20it/s]138it [00:49,  2.76it/s]139it [00:49,  2.89it/s]136it [00:49,  2.85it/s]140it [00:49,  3.00it/s]137it [00:50,  2.66it/s]141it [00:50,  3.08it/s]138it [00:50,  2.79it/s]142it [00:50,  2.85it/s]139it [00:50,  3.09it/s]140it [00:50,  3.21it/s]143it [00:51,  2.69it/s]141it [00:51,  3.05it/s]144it [00:51,  2.83it/s]142it [00:51,  3.20it/s]143it [00:51,  3.76it/s]145it [00:51,  2.58it/s]144it [00:52,  3.34it/s]146it [00:52,  2.67it/s]145it [00:52,  3.08it/s]147it [00:52,  2.70it/s]148it [00:52,  2.95it/s]146it [00:52,  3.13it/s]147it [00:53,  3.15it/s]149it [00:53,  2.68it/s]150it [00:53,  3.00it/s]148it [00:53,  2.98it/s]151it [00:53,  3.23it/s]149it [00:53,  2.89it/s]152it [00:54,  3.02it/s]150it [00:54,  2.79it/s]153it [00:54,  2.96it/s]151it [00:54,  2.89it/s]154it [00:54,  2.93it/s]152it [00:54,  3.06it/s]155it [00:55,  3.10it/s]153it [00:55,  3.07it/s]154it [00:55,  3.11it/s]156it [00:55,  2.77it/s]157it [00:55,  2.85it/s]155it [00:55,  2.92it/s]158it [00:56,  3.12it/s]156it [00:56,  2.89it/s]159it [00:56,  2.87it/s]157it [00:56,  2.75it/s]160it [00:56,  2.93it/s]158it [00:56,  2.95it/s]159it [00:57,  3.33it/s]161it [00:57,  2.94it/s]160it [00:57,  3.52it/s]162it [00:57,  3.19it/s]161it [00:57,  3.96it/s]163it [00:57,  3.67it/s]162it [00:57,  4.49it/s]164it [00:57,  4.25it/s]163it [00:57,  5.02it/s]165it [00:57,  4.77it/s]164it [00:57,  5.46it/s]166it [00:58,  5.23it/s]165it [00:58,  5.77it/s]167it [00:58,  5.59it/s]166it [00:58,  6.04it/s]168it [00:58,  5.89it/s]
+167it [00:58,  5.43it/s]168it [00:58,  5.77it/s]
+2018-11-27 15:27:59,268 maskrcnn_benchmark.inference INFO: Total inference time: 0:00:59.242254 (0.3536850971962089 s / img per device, on 2 devices)
+2018-11-27 15:27:59,453 maskrcnn_benchmark.inference INFO: Preparing results for COCO format
+2018-11-27 15:27:59,454 maskrcnn_benchmark.inference INFO: Preparing bbox results
+2018-11-27 15:27:59,492 maskrcnn_benchmark.inference INFO: Preparing segm results
+0it [00:00, ?it/s]1it [00:00,  3.86it/s]3it [00:00,  4.92it/s]4it [00:00,  4.97it/s]5it [00:00,  5.50it/s]7it [00:00,  6.95it/s]8it [00:01,  6.37it/s]10it [00:01,  7.49it/s]11it [00:01,  6.47it/s]13it [00:01,  7.58it/s]14it [00:01,  7.30it/s]15it [00:01,  6.04it/s]19it [00:02,  8.09it/s]22it [00:02,  8.90it/s]24it [00:02,  7.88it/s]28it [00:02,  9.69it/s]30it [00:03,  7.44it/s]32it [00:03,  7.25it/s]36it [00:03,  9.04it/s]39it [00:03, 11.08it/s]41it [00:04,  8.02it/s]43it [00:04,  7.79it/s]45it [00:04,  7.42it/s]46it [00:04,  7.90it/s]48it [00:05,  8.30it/s]51it [00:05,  8.07it/s]53it [00:05,  9.78it/s]55it [00:05, 10.47it/s]57it [00:06,  8.14it/s]60it [00:06,  9.96it/s]63it [00:06, 12.34it/s]66it [00:06, 13.81it/s]68it [00:06, 13.49it/s]70it [00:07,  9.65it/s]72it [00:07,  9.00it/s]74it [00:07,  7.68it/s]76it [00:07,  7.80it/s]77it [00:08,  6.65it/s]79it [00:08,  7.86it/s]81it [00:08,  7.54it/s]83it [00:08,  7.75it/s]84it [00:09,  5.08it/s]86it [00:09,  4.95it/s]87it [00:09,  4.90it/s]88it [00:10,  3.80it/s]89it [00:10,  3.78it/s]92it [00:10,  4.87it/s]93it [00:10,  4.94it/s]97it [00:11,  6.39it/s]99it [00:11,  7.37it/s]101it [00:11,  6.91it/s]102it [00:11,  6.43it/s]103it [00:12,  4.96it/s]104it [00:12,  5.30it/s]105it [00:12,  4.74it/s]110it [00:12,  6.30it/s]112it [00:13,  5.96it/s]114it [00:13,  6.27it/s]115it [00:13,  5.55it/s]117it [00:13,  6.36it/s]120it [00:13,  7.90it/s]122it [00:14,  7.13it/s]124it [00:14,  8.16it/s]126it [00:14,  8.10it/s]129it [00:14,  8.84it/s]131it [00:15, 10.22it/s]133it [00:15,  8.76it/s]135it [00:15,  7.22it/s]137it [00:16,  5.99it/s]139it [00:16,  7.51it/s]141it [00:16,  7.54it/s]142it [00:16,  6.85it/s]143it [00:17,  5.39it/s]145it [00:17,  6.39it/s]146it [00:17,  6.85it/s]147it [00:17,  6.22it/s]149it [00:17,  6.37it/s]150it [00:18,  6.37it/s]152it [00:18,  6.61it/s]156it [00:18,  8.54it/s]158it [00:18,  8.12it/s]160it [00:19,  7.23it/s]164it [00:19,  8.19it/s]166it [00:19,  5.94it/s]168it [00:20,  6.81it/s]169it [00:20,  5.33it/s]170it [00:20,  6.13it/s]171it [00:20,  6.61it/s]172it [00:20,  6.76it/s]174it [00:20,  7.50it/s]175it [00:21,  7.95it/s]177it [00:21,  8.66it/s]178it [00:21,  7.40it/s]179it [00:21,  7.71it/s]180it [00:21,  6.43it/s]182it [00:21,  7.47it/s]183it [00:22,  8.02it/s]185it [00:22,  7.38it/s]188it [00:22,  8.64it/s]190it [00:22, 10.26it/s]192it [00:23,  7.94it/s]194it [00:23,  9.69it/s]196it [00:23,  9.42it/s]198it [00:23, 11.14it/s]201it [00:23, 12.60it/s]203it [00:23, 13.20it/s]205it [00:23, 13.94it/s]208it [00:24, 10.30it/s]210it [00:24,  7.78it/s]212it [00:25,  7.22it/s]215it [00:25,  9.28it/s]219it [00:25, 11.94it/s]222it [00:25, 11.84it/s]224it [00:25, 13.32it/s]226it [00:25, 13.07it/s]228it [00:26, 11.34it/s]230it [00:26, 12.06it/s]232it [00:26, 12.67it/s]234it [00:26, 13.15it/s]236it [00:26, 13.70it/s]240it [00:26, 15.31it/s]242it [00:26, 15.39it/s]244it [00:27, 15.43it/s]246it [00:27, 16.11it/s]248it [00:27, 14.74it/s]251it [00:27, 13.26it/s]253it [00:27, 14.04it/s]255it [00:28, 10.91it/s]258it [00:28, 13.02it/s]260it [00:28, 12.38it/s]263it [00:28, 14.12it/s]265it [00:28, 13.42it/s]267it [00:28, 10.34it/s]269it [00:29, 10.05it/s]271it [00:29, 10.86it/s]274it [00:29, 12.79it/s]276it [00:29, 14.25it/s]278it [00:29, 10.03it/s]280it [00:30, 11.10it/s]283it [00:30, 12.94it/s]285it [00:30, 12.38it/s]287it [00:30, 13.57it/s]289it [00:30, 14.76it/s]293it [00:30, 15.73it/s]295it [00:30, 14.72it/s]297it [00:31, 12.80it/s]299it [00:31, 11.60it/s]301it [00:31,  8.58it/s]303it [00:31,  9.36it/s]309it [00:32, 12.03it/s]313it [00:32, 14.61it/s]316it [00:32, 15.64it/s]319it [00:32, 14.27it/s]322it [00:32, 15.63it/s]324it [00:33, 12.60it/s]326it [00:33, 11.39it/s]328it [00:33, 10.23it/s]330it [00:33,  9.65it/s]332it [00:34,  7.98it/s]334it [00:34,  9.61it/s]335it [00:34,  9.79it/s]
+2018-11-27 15:28:33,724 maskrcnn_benchmark.inference INFO: Evaluating predictions
+Loading and preparing results...
+DONE (t=0.02s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=0.68s).
+Accumulating evaluation results...
+DONE (t=0.07s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.306
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.530
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.314
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.214
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.493
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.680
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.093
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.374
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.382
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.266
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.611
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.800
+Loading and preparing results...
+DONE (t=0.03s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *segm*
+DONE (t=0.75s).
+Accumulating evaluation results...
+DONE (t=0.06s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.300
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.527
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.306
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.198
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.498
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.736
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.092
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.370
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.378
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.259
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.611
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.817
+2018-11-27 15:28:35,461 maskrcnn_benchmark.inference INFO: OrderedDict([('bbox', OrderedDict([('AP', 0.30638062239884334), ('AP50', 0.5304540637151733), ('AP75', 0.31421113761299024), ('APs', 0.2138325476653004), ('APm', 0.4926309587406108), ('APl', 0.6802412790736021)])), ('segm', OrderedDict([('AP', 0.300143874886951), ('AP50', 0.5265810042547029), ('AP75', 0.3060660426178966), ('APs', 0.19811587936460018), ('APm', 0.4977387223631561), ('APl', 0.7359568601216679)]))])
+done boiz
