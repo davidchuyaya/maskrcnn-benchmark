@@ -29,7 +29,7 @@ MODEL:
     SHARE_BOX_FEATURE_EXTRACTOR: False
   MASK_ON: True
 DATASETS:
-  TRAIN: ("cityscape_train", "cityscape_val")
-  TEST: ("cityscape_test",)
+  TRAIN: ("cityscapes_train", "cityscapes_val")
+  TEST: ("cityscapes_test",)
 DATALOADER:
   SIZE_DIVISIBILITY: 32
