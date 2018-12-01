@@ -1,0 +1,13 @@
+Video: video_0133, frames: [150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179]
+Traceback (most recent call last):
+  File "create_segmentations.py", line 95, in <module>
+    predictions = predictFrame(img, cocoPredictor, trafficSignPredictor)
+  File "create_segmentations.py", line 71, in predictFrame
+    (cocoLabels, cocoSegmentations) = predictLabelsAndSegmentations(img, cocoPredictor)
+  File "create_segmentations.py", line 65, in predictLabelsAndSegmentations
+    predictor.select_top_predictions(predictions)
+  File "/home/dc788/maskrcnn-benchmark/demo/predictor.py", line 235, in select_top_predictions
+    predictions = predictions[keep]
+  File "/home/dc788/maskrcnn-benchmark/maskrcnn_benchmark/structures/bounding_box.py", line 208, in __getitem__
+    bbox.add_field(k, v[item])
+RuntimeError: index 9 is out of bounds for dimension 0 with size 1

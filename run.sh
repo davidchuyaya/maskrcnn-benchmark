@@ -1,13 +1,16 @@
 #!/bin/bash
-cd ~
-./download_cityscapes.sh
+#cd ~
+#./download_cityscapes.sh
 
-cd ~/maskrcnn_benchmark
-python convert_cityscapes_to_coco.py /scratch/datasets/cityscapes /scratch/datasets/cityscapes
+#cd ~/maskrcnn-benchmark
+#python convert_cityscapes_to_coco.py ~/cityscapes ~/cityscapes
 
 #rename directories
-cd /scratch/datasets/cityscapes
-mv gtFine old_gtFine
-mv leftImg8bit gtFine
+#cd ~/cityscapes
+#mv gtFine old_gtFine
+#mv leftImg8bit gtFine
 
-./attempt_train.sh
+cp -r -n ~/cityscapes /scratch/datasets/cityscapes || true
+
+cd ~/maskrcnn-benchmark
+./train.sh

@@ -31,7 +31,7 @@ def getFramesDict(directory: str):
 	num_frames = 30
 	frames_to_process = set()
 	for json_filename in fold_dict:
-		json_path = os.path.join(fold_dict[json_filename], json_filename)
+		json_path = directory + "/" + fold_dict[json_filename] + "/" + json_filename
 		with open(json_path, 'r') as f:
 			ped_json = json.load(f)
 		video_name = ped_json['video']
@@ -62,16 +62,16 @@ def getVideoFrames(videoName: str, frames: list):
 		
 def predictLabelsAndSegmentations(img, predictor):
 	predictions = predictor.compute_prediction(img)
-	predictions = predictor.select_top_predictions(predictions)
-	labels = predictor.get_field("labels").numpy()
-	segmentations = predictor.get_field("mask").numpy()
+	predictor.select_top_predictions(predictions)
+	labels = predictions.get_field("labels").numpy()
+	segmentations = predictions.get_field("mask").numpy()
 	return (labels, segmentations)
 		
 def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	(cocoLabels, cocoSegmentations) = predictLabelsAndSegmentations(img, cocoPredictor)
 	(_, trafficSignSegmentations) = predictLabelsAndSegmentations(img, trafficSignPredictor)
 	
-	carIndices = cocoLabels >= 3 && cocoLabels =< 9
+	carIndices = cocoLabels >= 3 and cocoLabels <= 9
 	trafficLightIndices = cocoLabels == 10
 	
 	segmentations = []
@@ -89,11 +89,13 @@ trafficSignPredictor = loadTrafficSignPredictor()
 frames_dict = getFramesDict(dataDir)
 for videoName, frames in frames_dict.items():
 	frame_data = []
+	print("Video: " + videoName + ", frames: " + str(frames))
 	
-	for frame, img in getVideoFrames(dataDir + "/JAAD_clips/" + videoName, frames):
+	for frame, img in getVideoFrames(dataDir + "/JAAD_clips/" + videoName + ".mp4", frames):
 		predictions = predictFrame(img, cocoPredictor, trafficSignPredictor)
-		frame_data.append({"frame_index": frame, "segmentations": predictions)
+		frame_data.append({"frame_index": frame, "segmentations": predictions})
+		print("Appended for " + videoName + "-" + str(frame) + ": " + str(predictions))
 		
 	with open(outDir + "/" + videoName + ".json", "w") as f:
 		print("Saving segmentation for " + videoName)
-		json.dumps(frame_data, f)
+		json.dump(frame_data, f)
