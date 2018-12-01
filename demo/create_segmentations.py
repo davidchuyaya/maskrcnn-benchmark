@@ -65,7 +65,17 @@ def predictLabelsAndSegmentations(img, predictor):
 	predictions = predictor.compute_prediction(img)
 	predictions = predictor.select_top_predictions(predictions)
 	labels = predictions.get_field("labels").numpy()
-	segmentations = predictions.get_field("mask").numpy()
+	masks = predictions.get_field("mask").numpy()
+	segmentations = []
+	
+	for mask in masks:
+		thresh = mask[0, :, :, None]
+		_, contours, hierarchy = cv2.findContours(
+			thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE
+		)
+		segmentations.append(contours)
+		
+	segmentations = np.array(segmentations)
 	return (labels, segmentations)
 		
 def predictFrame(img, cocoPredictor, trafficSignPredictor):
