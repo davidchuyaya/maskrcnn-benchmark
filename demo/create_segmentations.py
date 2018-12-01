@@ -72,7 +72,7 @@ def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	(cocoLabels, cocoSegmentations) = predictLabelsAndSegmentations(img, cocoPredictor)
 	(_, trafficSignSegmentations) = predictLabelsAndSegmentations(img, trafficSignPredictor)
 	
-	carIndices = cocoLabels >= 3 and cocoLabels <= 9
+	carIndices = (cocoLabels >= 3) & (cocoLabels <= 9)
 	trafficLightIndices = cocoLabels == 10
 	
 	segmentations = []

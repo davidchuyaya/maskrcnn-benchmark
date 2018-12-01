@@ -212,7 +212,7 @@ class COCODemo(object):
             # in the image, as defined by the bounding boxes
             masks = prediction.get_field("mask")
             # always single image is passed at a time
-            masks = self.masker(masks, [prediction])[0]
+            masks = self.masker(masks, [prediction])
             prediction.add_field("mask", masks)
         return prediction
 
