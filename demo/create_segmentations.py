@@ -75,7 +75,7 @@ def predictLabelsAndSegmentations(img, predictor):
 		)
 		segmentations.append(contours)
 		
-	segmentations = np.array(segmentations)
+	segmentations = np.array(segmentations).flatten()
 	return (labels, segmentations)
 		
 def predictFrame(img, cocoPredictor, trafficSignPredictor):
@@ -98,6 +98,8 @@ class NumpyEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, np.ndarray):
             return obj.tolist()
+	if isinstance(obj, numpy.int32):
+	    return int(obj)  
         return json.JSONEncoder.default(self, obj)
 
 cocoPredictor = loadCOCOPredictor()
