@@ -93,6 +93,12 @@ def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	for trafficSign in trafficSignSegmentations:
 		segmentations.append({"label": "traffic sign", "segmentation": trafficSign})
 	return segmentations
+	
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return json.JSONEncoder.default(self, obj)
 
 cocoPredictor = loadCOCOPredictor()
 trafficSignPredictor = loadTrafficSignPredictor()
@@ -109,4 +115,4 @@ for videoName, frames in frames_dict.items():
 		
 	with open(outDir + "/" + videoName + ".json", "w") as f:
 		print("Saving segmentation for " + videoName)
-		json.dump(frame_data, f)
+		json.dump(frame_data, f, cls=NumpyEncoder)
