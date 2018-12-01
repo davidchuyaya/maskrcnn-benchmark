@@ -95,12 +95,12 @@ def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	return segmentations
 	
 class NumpyEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, np.ndarray):
-            return obj.tolist()
-	if isinstance(obj, numpy.int32):
-	    return int(obj)  
-        return json.JSONEncoder.default(self, obj)
+	def default(self, obj):
+		if isinstance(obj, np.ndarray):
+			return obj.tolist()
+		if isinstance(o, numpy.int32):
+			return int(o)  
+		return json.JSONEncoder.default(self, obj)
 
 cocoPredictor = loadCOCOPredictor()
 trafficSignPredictor = loadTrafficSignPredictor()
