@@ -70,8 +70,8 @@ def predictLabelsAndSegmentations(img, predictor):
 	
 	for mask in masks:
 		thresh = mask[0, :, :, None]
-		_, contours, hierarchy = cv2.findContours(
-			thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE
+		_, contours, hierarchy = cv.findContours(
+			thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE
 		)
 		segmentations.append(contours)
 		
@@ -105,7 +105,7 @@ for videoName, frames in frames_dict.items():
 	for frame, img in getVideoFrames(dataDir + "/JAAD_clips/" + videoName + ".mp4", frames):
 		predictions = predictFrame(img, cocoPredictor, trafficSignPredictor)
 		frame_data.append({"frame_index": frame, "segmentations": predictions})
-		print("Appended for " + videoName + "-" + str(frame) + ": " + str(predictions))
+		print("Appended for " + videoName + "-" + str(frame))
 		
 	with open(outDir + "/" + videoName + ".json", "w") as f:
 		print("Saving segmentation for " + videoName)

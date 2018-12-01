@@ -1,0 +1,36 @@
+Video: video_0109, frames: [43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168]
+Appended for video_0109-43
+Appended for video_0109-44
+Appended for video_0109-45
+Appended for video_0109-46
+Appended for video_0109-47
+Appended for video_0109-48
+Appended for video_0109-49
+Appended for video_0109-50
+Appended for video_0109-51
+Appended for video_0109-52
+Appended for video_0109-53
+Appended for video_0109-54
+Appended for video_0109-55
+Appended for video_0109-56
+Appended for video_0109-57
+Appended for video_0109-58
+Appended for video_0109-59
+Appended for video_0109-60
+Appended for video_0109-61
+Appended for video_0109-62
+Appended for video_0109-63
+Appended for video_0109-64
+Appended for video_0109-65
+Appended for video_0109-66
+Appended for video_0109-67
+Appended for video_0109-68
+Appended for video_0109-69
+Appended for video_0109-70
+Appended for video_0109-71
+Traceback (most recent call last):
+  File "create_segmentations.py", line 106, in <module>
+    predictions = predictFrame(img, cocoPredictor, trafficSignPredictor)
+  File "create_segmentations.py", line 90, in predictFrame
+    segmentations.append({"label": "car", "segmentation": vehicle.tolist()})
+AttributeError: 'list' object has no attribute 'tolist'
