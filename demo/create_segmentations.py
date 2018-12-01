@@ -55,6 +55,7 @@ def getVideoFrames(videoName: str, frames: list):
 	while True:
 		ret, img = video.read()
 		if not ret:
+			video.release()
 			return
 		if i in frames:
 			yield (i, img)
@@ -62,7 +63,7 @@ def getVideoFrames(videoName: str, frames: list):
 		
 def predictLabelsAndSegmentations(img, predictor):
 	predictions = predictor.compute_prediction(img)
-	predictor.select_top_predictions(predictions)
+	predictions = predictor.select_top_predictions(predictions)
 	labels = predictions.get_field("labels").numpy()
 	segmentations = predictions.get_field("mask").numpy()
 	return (labels, segmentations)
