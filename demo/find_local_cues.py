@@ -19,8 +19,8 @@ maskDir: str = sys.argv[2]
 def expandBbox(topLeft, bottomRight):
 	width = bottomRight[0] - topLeft[0]
 	height = bottomRight[1] - topLeft[1]
-	centerX = topLeft[0] + width / 2
-	centerY = topLeft[1] + height / 2
+	centerX = topLeft[0] + width // 2
+	centerY = topLeft[1] + height // 2
 	
 	# Don't exceed image bounds when expanding
 	newTopLeftX = max(centerX - height, 0)
