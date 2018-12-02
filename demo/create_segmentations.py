@@ -61,45 +61,30 @@ def getVideoFrames(videoName: str, frames: list):
 			yield (i, img)
 		i += 1
 		
-def predictLabelsAndSegmentations(img, predictor):
+def predictLabelsAndMasks(img, predictor):
 	predictions = predictor.compute_prediction(img)
 	predictions = predictor.select_top_predictions(predictions)
 	labels = predictions.get_field("labels").numpy()
 	masks = predictions.get_field("mask").numpy()
-	segmentations = []
-	
-	for mask in masks:
-		thresh = mask[0, :, :, None]
-		_, contours, hierarchy = cv.findContours(
-			thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE
-		)
-		segmentations.append(contours)
-		
-	segmentations = np.array(segmentations).flatten()
-	return (labels, segmentations)
+	return (labels, masks)
 		
 def predictFrame(img, cocoPredictor, trafficSignPredictor):
-	(cocoLabels, cocoSegmentations) = predictLabelsAndSegmentations(img, cocoPredictor)
-	(_, trafficSignSegmentations) = predictLabelsAndSegmentations(img, trafficSignPredictor)
+	(cocoLabels, cocoMasks) = predictLabelsAndMasks(img, cocoPredictor)
+	(_, trafficSignMasks) = predictLabelsAndMasks(img, trafficSignPredictor)
 	
 	carIndices = (cocoLabels >= 3) & (cocoLabels <= 9)
 	trafficLightIndices = cocoLabels == 10
 	
-	segmentations = []
-	for vehicle in cocoSegmentations[carIndices]:
-		segmentations.append({"label": "car", "segmentation": vehicle})
-	for trafficLight in cocoSegmentations[trafficLightIndices]:
-		segmentations.append({"label": "traffic light", "segmentation": trafficLight})
-	for trafficSign in trafficSignSegmentations:
-		segmentations.append({"label": "traffic sign", "segmentation": trafficSign})
-	return segmentations
+	# NOTE: Traffic sign = 1, Car = 2, Traffic light = 3
+	mask = trafficSignMasks + 2 * cocoMasks[carIndices] + 3 * cocoMasks[trafficLightIndices]
+	return mask
 	
 class NumpyEncoder(json.JSONEncoder):
 	def default(self, obj):
 		if isinstance(obj, np.ndarray):
 			return obj.tolist()
-		if isinstance(o, numpy.int32):
-			return int(o)  
+		if isinstance(obj, numpy.int32):
+			return int(obj)
 		return json.JSONEncoder.default(self, obj)
 
 cocoPredictor = loadCOCOPredictor()
@@ -111,8 +96,8 @@ for videoName, frames in frames_dict.items():
 	print("Video: " + videoName + ", frames: " + str(frames))
 	
 	for frame, img in getVideoFrames(dataDir + "/JAAD_clips/" + videoName + ".mp4", frames):
-		predictions = predictFrame(img, cocoPredictor, trafficSignPredictor)
-		frame_data.append({"frame_index": frame, "segmentations": predictions})
+		mask = predictFrame(img, cocoPredictor, trafficSignPredictor)
+		frame_data.append({"frame_index": frame, "mask": mask})
 		print("Appended for " + videoName + "-" + str(frame))
 		
 	with open(outDir + "/" + videoName + ".json", "w") as f:
