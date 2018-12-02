@@ -71,6 +71,8 @@ def predictLabelsAndMasks(img, predictor):
 def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	(cocoLabels, cocoMasks) = predictLabelsAndMasks(img, cocoPredictor)
 	(_, trafficSignMasks) = predictLabelsAndMasks(img, trafficSignPredictor)
+	print("COCO shape: " + str(cocoMasks.shape))
+	print("Traffic sign shape: " + str(trafficSignMasks.shape))
 	
 	carIndices = (cocoLabels >= 3) & (cocoLabels <= 9)
 	trafficLightIndices = cocoLabels == 10
