@@ -38,8 +38,8 @@ def featuresInBbox(bbox, mask):
 	labels = labels[counts >= threshold]
 	
 	return {
-		"road": 0 in labels,
-		"sidewalk": 1 in labels,
+		"road": False,
+		"sidewalk": False,
 		"traffic sign": 50 in labels,
 		"vehicle": 100 in labels,
 		"traffic light": 150 in labels
