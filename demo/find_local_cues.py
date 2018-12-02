@@ -1,7 +1,6 @@
 from PIL import Image
 import numpy as np
 import sys
-import glob
 import json
 import os
 
@@ -49,7 +48,8 @@ fold_dict_filename = '/pedestrian_dataset_folds/fold_dict.json'
 with open(dataDir + fold_dict_filename, 'r') as f:
 	fold_dict = json.load(f)
 for json_filename in fold_dict:
-	json_path = dataDir + "/" + fold_dict[json_filename] + "/" + json_filename
+	fold = fold_dict[json_filename]
+	json_path = dataDir + "/" + fold + "/" + json_filename
 	with open(json_path, 'r') as f:
 		ped_json = json.load(f)
 
@@ -63,5 +63,6 @@ for json_filename in fold_dict:
 		# add features to JSON
 		ped_json["frame_data"][i].update(features)
 	
-	with open(videoDir + "/" + json_filename, "w") as f:
+	os.makedirs(maskDir + "/" + fold, exist_ok=True)
+	with open(maskDir + "/" + fold + "/" + json_filename, "w") as f:
 		json.dump(ped_json, f)
