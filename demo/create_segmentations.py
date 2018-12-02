@@ -5,6 +5,7 @@ import numpy as np
 import cv2 as cv
 import sys
 import json
+import os
 
 # python create_segmentations.py <dataset directory> <output directory>
 # NOTE: Must run on GPU with CUDA
@@ -89,7 +90,7 @@ def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	else:
 		mask = cars + trafficLights
 		print("Traffic signs ignored due to dimension, detected " + str(len(trafficSignMasks)) + " signs")
-	return mask
+	return mask[0] # only 1 image at a time
 	
 class NumpyEncoder(json.JSONEncoder):
 	def default(self, obj):
@@ -111,4 +112,4 @@ for videoName, frames in frames_dict.items():
 	for frame, img in getVideoFrames(dataDir + "/JAAD_clips/" + videoName + ".mp4", frames):
 		mask = predictFrame(img, cocoPredictor, trafficSignPredictor)
 		img = Image.fromarray(mask, "L") # grayscale
-		img.save(outDir + "/" + str(frame) + ".png")
+		img.save(videoDir + "/" + str(frame) + ".png")
