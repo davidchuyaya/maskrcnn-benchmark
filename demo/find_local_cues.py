@@ -34,7 +34,7 @@ def featuresInBbox(bbox, mask):
 	patch = mask[topLeftX:bottomRightX, topLeftY:bottomRightY]
 	labels, counts = np.unique(patch, return_counts=True)
 	
-	threshold = np.matrix.size(patch) * 0.05
+	threshold = patch.size * 0.05
 	labels = labels[counts >= threshold]
 	
 	return {
