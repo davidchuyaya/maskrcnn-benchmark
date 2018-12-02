@@ -62,7 +62,7 @@ def getVideoFrames(videoName: str, frames: list):
 		if i in frames:
 			yield (i, img)
 		i += 1
-		
+
 def predictLabelsAndMasks(img, predictor):
 	predictions = predictor.compute_prediction(img)
 	predictions = predictor.select_top_predictions(predictions)
@@ -78,28 +78,22 @@ def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	trafficLightIndices = cocoLabels == 10
 	
 	# NOTE: Traffic sign = 50, Car = 100, Traffic light = 150
-	trafficSigns = 50 * np.sum(trafficSignMasks, axis=0)
-	cars = 100 * np.sum(cocoMasks[carIndices], axis=0)
-	trafficLights = 150 * np.sum(cocoMasks[trafficLightIndices], axis=0)
+	trafficSigns = 50 * np.logical_or.reduce(trafficSignMasks)
+	cars = 100 * np.logical_or.reduce(cocoMasks[carIndices])
+	trafficLights = 150 * np.logical_or.reduce(cocoMasks[trafficLightIndices])
 	print("Traffic sign shape: " + str(trafficSigns.shape))
 	print("Cars shape: " + str(cars.shape))
 	print("Traffic lights shape: " + str(trafficLights.shape))
-
-	if trafficSigns.shape == cars.shape:
-		mask = trafficSigns + cars + trafficLights
-	else:
-		mask = cars + trafficLights
-		print("Traffic signs ignored due to dimension, detected " + str(len(trafficSignMasks)) + " signs")
-	return mask[0] # only 1 image at a time
 	
-class NumpyEncoder(json.JSONEncoder):
-	def default(self, obj):
-		if isinstance(obj, np.ndarray):
-			return obj.tolist()
-		if isinstance(obj, numpy.int32):
-			return int(obj)
-		return json.JSONEncoder.default(self, obj)
-
+	# In overlaps, prioritize signs, then lights, then cars
+	carsAndLights = np.where(trafficLights == 0, cars, trafficLights)
+	if trafficSigns.shape == cars.shape:
+		mask = np.where(trafficSigns == 0, carsAndLights, trafficSigns)
+	else:
+		mask = carsAndLights
+		print("Traffic signs ignored due to dimension, detected " + str(len(trafficSignMasks)) + " signs")
+	return mask[0].astype("uint8") # only 1 image at a time
+	
 cocoPredictor = loadCOCOPredictor()
 trafficSignPredictor = loadTrafficSignPredictor()
 
@@ -113,3 +107,4 @@ for videoName, frames in frames_dict.items():
 		mask = predictFrame(img, cocoPredictor, trafficSignPredictor)
 		img = Image.fromarray(mask, "L") # grayscale
 		img.save(videoDir + "/" + str(frame) + ".png")
+	break
