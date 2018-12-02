@@ -1,5 +1,6 @@
 from maskrcnn_benchmark.config import cfg
 from predictor import COCODemo
+from PIL import Image
 import numpy as np
 import cv2 as cv
 import sys
@@ -75,10 +76,10 @@ def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	carIndices = (cocoLabels >= 3) & (cocoLabels <= 9)
 	trafficLightIndices = cocoLabels == 10
 	
-	# NOTE: Traffic sign = 1, Car = 2, Traffic light = 3
-	trafficSigns = np.sum(trafficSignMasks, axis=0)
-	cars = 2 * np.sum(cocoMasks[carIndices], axis=0)
-	trafficLights = 3 * np.sum(cocoMasks[trafficLightIndices], axis=0)
+	# NOTE: Traffic sign = 50, Car = 100, Traffic light = 150
+	trafficSigns = 50 * np.sum(trafficSignMasks, axis=0)
+	cars = 100 * np.sum(cocoMasks[carIndices], axis=0)
+	trafficLights = 150 * np.sum(cocoMasks[trafficLightIndices], axis=0)
 	print("Traffic sign shape: " + str(trafficSigns.shape))
 	print("Cars shape: " + str(cars.shape))
 	print("Traffic lights shape: " + str(trafficLights.shape))
@@ -87,7 +88,7 @@ def predictFrame(img, cocoPredictor, trafficSignPredictor):
 		mask = trafficSigns + cars + trafficLights
 	else:
 		mask = cars + trafficLights
-		print("Traffic signs ignored, detected " + str(np.sum(trafficSigns)) + " signs")
+		print("Traffic signs ignored due to dimension, detected " + str(len(trafficSignMasks)) + " signs")
 	return mask
 	
 class NumpyEncoder(json.JSONEncoder):
@@ -103,14 +104,11 @@ trafficSignPredictor = loadTrafficSignPredictor()
 
 frames_dict = getFramesDict(dataDir)
 for videoName, frames in frames_dict.items():
-	frame_data = []
 	print("Video: " + videoName + ", frames: " + str(frames))
+	videoDir = outDir + "/" + videoName
+	os.mkdir(videoDir)
 	
 	for frame, img in getVideoFrames(dataDir + "/JAAD_clips/" + videoName + ".mp4", frames):
 		mask = predictFrame(img, cocoPredictor, trafficSignPredictor)
-		frame_data.append({"frame_index": frame, "mask": mask})
-		print("Appended for " + videoName + "-" + str(frame))
-		
-	with open(outDir + "/" + videoName + ".json", "w") as f:
-		print("Saving segmentation for " + videoName)
-		json.dump(frame_data, f, cls=NumpyEncoder)
+		img = Image.fromarray(mask, "L") # grayscale
+		img.save(outDir + "/" + str(frame) + ".png")
