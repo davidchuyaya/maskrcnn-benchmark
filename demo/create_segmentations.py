@@ -71,14 +71,23 @@ def predictLabelsAndMasks(img, predictor):
 def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	(cocoLabels, cocoMasks) = predictLabelsAndMasks(img, cocoPredictor)
 	(_, trafficSignMasks) = predictLabelsAndMasks(img, trafficSignPredictor)
-	print("COCO shape: " + str(cocoMasks.shape))
-	print("Traffic sign shape: " + str(trafficSignMasks.shape))
 	
 	carIndices = (cocoLabels >= 3) & (cocoLabels <= 9)
 	trafficLightIndices = cocoLabels == 10
 	
 	# NOTE: Traffic sign = 1, Car = 2, Traffic light = 3
-	mask = trafficSignMasks + 2 * cocoMasks[carIndices] + 3 * cocoMasks[trafficLightIndices]
+	trafficSigns = np.sum(trafficSignMasks, axis=0)
+	cars = 2 * np.sum(cocoMasks[carIndices], axis=0)
+	trafficLights = 3 * np.sum(cocoMasks[trafficLightIndices], axis=0)
+	print("Traffic sign shape: " + str(trafficSigns.shape))
+	print("Cars shape: " + str(cars.shape))
+	print("Traffic lights shape: " + str(trafficLights.shape))
+
+	if trafficSigns.shape == cars.shape:
+		mask = trafficSigns + cars + trafficLights
+	else:
+		mask = cars + trafficLights
+		print("Traffic signs ignored, detected " + str(np.sum(trafficSigns)) + " signs")
 	return mask
 	
 class NumpyEncoder(json.JSONEncoder):
