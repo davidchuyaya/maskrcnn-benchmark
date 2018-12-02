@@ -89,9 +89,8 @@ def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	carsAndLights = np.where(trafficLights == 0, cars, trafficLights)
 	if trafficSigns.shape == cars.shape:
 		mask = np.where(trafficSigns == 0, carsAndLights, trafficSigns)
-	else:
+	else: # no traffic signs detected. Dimensions will not match.
 		mask = carsAndLights
-		print("Traffic signs ignored due to dimension, detected " + str(len(trafficSignMasks)) + " signs")
 	return mask[0].astype("uint8") # only 1 image at a time
 	
 cocoPredictor = loadCOCOPredictor()
@@ -107,4 +106,3 @@ for videoName, frames in frames_dict.items():
 		mask = predictFrame(img, cocoPredictor, trafficSignPredictor)
 		img = Image.fromarray(mask, "L") # grayscale
 		img.save(videoDir + "/" + str(frame) + ".png")
-	break
