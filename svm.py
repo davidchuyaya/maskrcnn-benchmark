@@ -1,9 +1,11 @@
 from sklearn.svm import LinearSVC
 from joblib import dump, load
 import numpy as np
+import sys
 
 train = True
-dataDir = "/scratch/datasets"
+# Must contain "/pedestrian_dataset_folds"
+dataDir = sys.argv[1]
 
 filename = "svm.joblib"
 
@@ -73,7 +75,7 @@ else:
 
 # evaluate
 predictions = classifier.predict(xTe)
-print("Predictions: " + str(predictions))
+# print("Predictions: " + str(predictions))
 misclassifications = np.sum(np.rint(predictions) != yTe)
 error = misclassifications / len(yTe)
 print("Error: " + str(error))
