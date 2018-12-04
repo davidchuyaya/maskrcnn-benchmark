@@ -22,10 +22,10 @@ def expandBbox(topLeft, bottomRight):
 	centerY = topLeft[1] + height // 2
 	
 	# Don't exceed image bounds when expanding
-	newTopLeftX = max(centerX - height, 0)
-	newTopLeftY = max(centerY - height, 0)
-	newBottomRightX = min(centerX + height, 1920)
-	newBottomRightY = min(centerY + height, 1080)
+	newTopLeftX = max(centerX - height * 2, 0)
+	newTopLeftY = max(centerY - height * 2, 0)
+	newBottomRightX = min(centerX + height * 2, 1920)
+	newBottomRightY = min(centerY + height * 2, 1080)
 	return (newTopLeftX, newTopLeftY, newBottomRightX, newBottomRightY)
 
 def featuresInBbox(bbox, mask):
