@@ -60,7 +60,7 @@ def getVideoFrames(videoName: str, frames: list):
 			video.release()
 			return
 		# if i in frames: TODO
-        if i == max(frames): # temporarily just get the last frame
+		if i == max(frames): # temporarily just get the last frame
 			yield (i, img)
 		i += 1
 
