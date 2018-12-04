@@ -53,13 +53,14 @@ def getFramesDict(directory: str):
 	
 def getVideoFrames(videoName: str, frames: list):
 	video = cv.VideoCapture(videoName)
-	i = 1
+	i = 0
 	while True:
 		ret, img = video.read()
 		if not ret:
 			video.release()
 			return
-		if i in frames:
+		# if i in frames: TODO
+        if i == max(frames): # temporarily just get the last frame
 			yield (i, img)
 		i += 1
 
