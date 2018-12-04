@@ -58,8 +58,12 @@ for json_filename in fold_dict:
 	for i, frame in enumerate(frames):
 		index = frame["frame_index"]
 		bbox = expandBbox(frame["bb_top_left"], frame["bb_bottom_right"])
-		mask = np.array(Image.open(videoDir + "/" + str(index) + ".png"))
-		features = featuresInBbox(bbox, mask)
+		try:
+			mask = np.array(Image.open(videoDir + "/" + str(index) + ".png"))
+			features = featuresInBbox(bbox, mask)
+		except IOError:
+			print("Could not find " + videoDir + "/" + str(index) + ".png"))
+			features = {"road": False, "sidewalk": False, "traffic sign": False, "vehicle": False, "traffic light": False}
 		# add features to JSON
 		ped_json["frame_data"][i].update(features)
 	
