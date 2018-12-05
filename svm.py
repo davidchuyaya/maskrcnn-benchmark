@@ -88,8 +88,7 @@ def errorAfterTrainingOn(xTr, yTr, xTe, yTe):
 
 
 data, labels = getXY(dataDir)
-# TODO change to leave-one-out 5-fold validation
-errors = np.empty(5)
+error = np.empty(5)
 numFolds = 5
 for i in range(numFolds):
 	xTr, yTr, xTe, yTe = leaveOneOut(i, data, labels)
