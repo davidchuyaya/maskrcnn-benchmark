@@ -48,12 +48,13 @@ def getXY(directory: str):
 				# add custom features
 				# frame_features.append(int(frame_dict["road"]))
 				# frame_features.append(int(frame_dict["sidewalk"]))
-				frame_features.append(int(frame_dict["traffic sign"]))
-				frame_features.append(int(frame_dict["vehicle"]))
-				frame_features.append(int(frame_dict["traffic light"]))
-				num_signs += int(frame_dict["traffic sign"])
-				num_cars += int(frame_dict["vehicle"])
-				num_lights += int(frame_dict["traffic light"])
+				if "traffic sign" in frame_dict:
+					frame_features.append(int(frame_dict["traffic sign"]))
+					frame_features.append(int(frame_dict["vehicle"]))
+					frame_features.append(int(frame_dict["traffic light"]))
+					num_signs += int(frame_dict["traffic sign"])
+					num_cars += int(frame_dict["vehicle"])
+					num_lights += int(frame_dict["traffic light"])
 				
 				fold_data.append(np.array(frame_features))	
 				fold_labels.append(int(ped_json['crossing']))
