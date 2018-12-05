@@ -14,7 +14,9 @@ filename = "svm.joblib"
 # Returns (data, labels), each a 5 element array of (fold_data, fold_labels)
 def getXY(directory: str):
 	count = 0
-	num_segmentations = 0
+	num_signs = 0
+	num_cars = 0
+	num_lights = 0
 	data = []
 	labels = []
 	
@@ -46,7 +48,9 @@ def getXY(directory: str):
 				frame_features.append(int(frame_dict["traffic sign"]))
 				frame_features.append(int(frame_dict["vehicle"]))
 				frame_features.append(int(frame_dict["traffic light"]))
-				num_segmentations += int(frame_dict["traffic sign"]) + int(frame_dict["vehicle"]) + int(frame_dict["traffic light"])
+				num_signs += int(frame_dict["traffic sign"])
+				num_cars += int(frame_dict["vehicle"])
+				num_lights += int(frame_dict["traffic light"])
 				
 				fold_data.append(np.array(frame_features))	
 				fold_labels.append(int(ped_json['crossing']))
@@ -54,7 +58,9 @@ def getXY(directory: str):
 			
 		data.append(fold_data)
 		labels.append(fold_labels)
-	print("Num segmentations: " + str(num_segmentations))
+	print("Num signs: " + str(num_signs))
+	print("Num cars: " + str(num_cars))
+	print("Num lights: " + str(num_lights))
 	return data, labels
 	
 # num ranges from 0 to 4
