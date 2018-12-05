@@ -14,6 +14,7 @@ filename = "svm.joblib"
 # Returns (data, labels), each a 5 element array of (fold_data, fold_labels)
 def getXY(directory: str):
 	count = 0
+	num_segmentations = 0
 	data = []
 	labels = []
 	
@@ -45,6 +46,7 @@ def getXY(directory: str):
 				frame_features.append(int(frame_dict["traffic sign"]))
 				frame_features.append(int(frame_dict["vehicle"]))
 				frame_features.append(int(frame_dict["traffic light"]))
+				num_segmentations += int(frame_dict["traffic sign"]) + int(frame_dict["vehicle"]) + int(frame_dict["traffic light"])
 				
 				fold_data.append(np.array(frame_features))	
 				fold_labels.append(int(ped_json['crossing']))
@@ -52,6 +54,7 @@ def getXY(directory: str):
 			
 		data.append(fold_data)
 		labels.append(fold_labels)
+	print("Num segmentations: " + str(num_segmentations))
 	return data, labels
 	
 # num ranges from 0 to 4
@@ -88,10 +91,10 @@ def errorAfterTrainingOn(xTr, yTr, xTe, yTe):
 
 
 data, labels = getXY(dataDir)
-error = np.empty(5)
-numFolds = 5
-for i in range(numFolds):
-	xTr, yTr, xTe, yTe = leaveOneOut(i, data, labels)
-	error[i] = errorAfterTrainingOn(xTr, yTr, xTe, yTe)
-print("Std dev: " + str(np.std(error)))
-print("Mean error: " + str(np.mean(error)))
+# error = np.empty(5)
+# numFolds = 5
+# for i in range(numFolds):
+	# xTr, yTr, xTe, yTe = leaveOneOut(i, data, labels)
+	# error[i] = errorAfterTrainingOn(xTr, yTr, xTe, yTe)
+# print("Std dev: " + str(np.std(error)))
+# print("Mean error: " + str(np.mean(error)))
