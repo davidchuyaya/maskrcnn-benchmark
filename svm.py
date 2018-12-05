@@ -10,7 +10,7 @@ dataDir = sys.argv[1]
 filename = "svm.joblib"
 
 # Returns (data, labels), each a 5 element array of (fold_data, fold_labels)
-def getFeatures(directory: str):
+def getXY(directory: str):
 	with open(directory + "/pedestrian_dataset_folds/fold_dict.json", "r") as f:
 		fold_dict = json.load(f)
 	count = 0
@@ -53,16 +53,31 @@ def getFeatures(directory: str):
 		data.append(fold_data)
 		labels.append(fold_labels)
 	return data, labels
+	
+# num ranges from 0 to 4
+def leaveOneOut(foldToLeaveOut: int, X, Y):
+	xTr = []
+	yTr = []
+	xTe = []
+	yTe = []
+	
+	for i in range(len(X)):
+		foldData = X[i]
+		foldLabels = Y[i]
+		
+		if i == foldToLeaveOut:
+			xTe = foldData
+			yTe = foldLabels
+		else:
+			xTr += foldData
+			yTr += foldLabels
+			
+	return xTr, yTr, xTe, yTe
 
 data, labels = getFeatures(dataDir)
 
 # TODO change to leave-one-out 5-fold validation
-xTr = data[:-1]
-xTr = xTr.reshape(-1, xTr.shape[-1])
-yTr = labels[:-1]
-yTr = yTr.reshape(-1, yTr.shape[-1])
-xTe = data[-1]
-yTe = labels[-1]
+xTr, yTr, xTe, yTe = leaveOneOut(4, data, labels)
 	
 if train:
 	# set random_state = 0 for replicable results
