@@ -73,23 +73,26 @@ def leaveOneOut(foldToLeaveOut: int, X, Y):
 			yTr += foldLabels
 			
 	return xTr, yTr, xTe, yTe
-
-data, labels = getXY(dataDir)
-# TODO change to leave-one-out 5-fold validation
-xTr, yTr, xTe, yTe = leaveOneOut(4, data, labels)
 	
-if train:
+def errorAfterTrainingOn(xTr, yTr, xTe, yTe):
 	# set random_state = 0 for replicable results
 	classifier = LinearSVC(penalty="l1", dual=False, random_state=0)
 	classifier.fit(xTr, yTr)
-	print("Weights: " + str(classifier.coef_))
-	dump(classifier.coef_, filename)
-else:
-	classifier = load(filename)
 
-# evaluate
-predictions = classifier.predict(xTe)
-# print("Predictions: " + str(predictions))
-misclassifications = np.sum(np.rint(predictions) != yTe)
-error = misclassifications / len(yTe)
-print("Error: " + str(error))
+	# evaluate
+	predictions = classifier.predict(xTe)
+	misclassifications = np.sum(np.rint(predictions) != yTe)
+	error = misclassifications / len(yTe)
+	print("Error: " + str(error))
+	return error
+
+
+data, labels = getXY(dataDir)
+# TODO change to leave-one-out 5-fold validation
+error = 0
+numFolds = 5
+for i in range(numFolds):
+	xTr, yTr, xTe, yTe = leaveOneOut(i, data, labels)
+	error += errorAfterTrainingOn(xTr, yTr, xTe, yTe)
+error /= numFolds
+print("Mean error: " + str(error))
