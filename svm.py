@@ -14,6 +14,8 @@ filename = "svm.joblib"
 # Returns (data, labels), each a 5 element array of (fold_data, fold_labels)
 def getXY(directory: str):
 	count = 0
+	num_roads = 0
+	num_sidewalks = 0
 	num_signs = 0
 	num_cars = 0
 	num_lights = 0
@@ -46,8 +48,11 @@ def getXY(directory: str):
 				frame_features.append(int(frame_dict['looking']))
 				
 				# add custom features
-				# frame_features.append(int(frame_dict["road"]))
-				# frame_features.append(int(frame_dict["sidewalk"]))
+				if "road" in frame_dict:
+					frame_features.append(int(frame_dict["road"]))
+					frame_features.append(int(frame_dict["sidewalk"]))
+					num_roads += int(frame_dict["road"])
+					num_sidewalks += int(frame_dict["sidewalk"])
 				if "traffic sign" in frame_dict:
 					frame_features.append(int(frame_dict["traffic sign"]))
 					frame_features.append(int(frame_dict["vehicle"]))
@@ -62,6 +67,8 @@ def getXY(directory: str):
 			
 		data.append(fold_data)
 		labels.append(fold_labels)
+	print("Num roads: " + str(num_roads))
+	print("Num sidewalks: " + str(num_sidewalks))
 	print("Num signs: " + str(num_signs))
 	print("Num cars: " + str(num_cars))
 	print("Num lights: " + str(num_lights))
