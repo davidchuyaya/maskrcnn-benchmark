@@ -1,7 +1,9 @@
 from sklearn.svm import LinearSVC
 from joblib import dump, load
 import numpy as np
+import json
 import sys
+import os
 
 train = True
 # Must contain "/pedestrian_dataset_folds"
@@ -11,8 +13,6 @@ filename = "svm.joblib"
 
 # Returns (data, labels), each a 5 element array of (fold_data, fold_labels)
 def getFeatures(directory: str):
-	with open(directory + "/pedestrian_dataset_folds/fold_dict.json", "r") as f:
-		fold_dict = json.load(f)
 	count = 0
 	data = []
 	labels = []
@@ -50,17 +50,19 @@ def getFeatures(directory: str):
 				fold_labels.append(int(ped_json['crossing']))
 			count += 1
 			
-		data.append(fold_data)
-		labels.append(fold_labels)
-	return data, labels
+		data.append(np.array(fold_data))
+		labels.append(np.array(fold_labels))
+	return np.array(data), np.array(labels)
 
 data, labels = getFeatures(dataDir)
 
 # TODO change to leave-one-out 5-fold validation
 xTr = data[:-1]
+print("before: " + str(xTr.shape))
 xTr = xTr.reshape(-1, xTr.shape[-1])
+print("after: " + str(xTr.shape))
 yTr = labels[:-1]
-yTr = yTr.reshape(-1, yTr.shape[-1])
+yTr = yTr.flatten()
 xTe = data[-1]
 yTe = labels[-1]
 	

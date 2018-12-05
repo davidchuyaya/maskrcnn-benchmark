@@ -8,6 +8,7 @@ build/
 dist/
 inference/
 out/
+dataset/
 
 # pytorch/python/numpy formats
 *.pth
