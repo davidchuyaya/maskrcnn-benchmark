@@ -1,7 +1,9 @@
 from sklearn.svm import LinearSVC
 from joblib import dump, load
 import numpy as np
+import json
 import sys
+import os
 
 train = True
 # Must contain "/pedestrian_dataset_folds"
@@ -11,8 +13,6 @@ filename = "svm.joblib"
 
 # Returns (data, labels), each a 5 element array of (fold_data, fold_labels)
 def getXY(directory: str):
-	with open(directory + "/pedestrian_dataset_folds/fold_dict.json", "r") as f:
-		fold_dict = json.load(f)
 	count = 0
 	data = []
 	labels = []
@@ -74,8 +74,7 @@ def leaveOneOut(foldToLeaveOut: int, X, Y):
 			
 	return xTr, yTr, xTe, yTe
 
-data, labels = getFeatures(dataDir)
-
+data, labels = getXY(dataDir)
 # TODO change to leave-one-out 5-fold validation
 xTr, yTr, xTe, yTe = leaveOneOut(4, data, labels)
 	

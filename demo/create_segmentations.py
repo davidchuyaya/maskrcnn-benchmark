@@ -82,9 +82,6 @@ def predictFrame(img, cocoPredictor, trafficSignPredictor):
 	trafficSigns = 50 * np.logical_or.reduce(trafficSignMasks)
 	cars = 100 * np.logical_or.reduce(cocoMasks[carIndices])
 	trafficLights = 150 * np.logical_or.reduce(cocoMasks[trafficLightIndices])
-	print("Traffic sign shape: " + str(trafficSigns.shape))
-	print("Cars shape: " + str(cars.shape))
-	print("Traffic lights shape: " + str(trafficLights.shape))
 	
 	# In overlaps, prioritize signs, then lights, then cars
 	carsAndLights = np.where(trafficLights == 0, cars, trafficLights)
@@ -99,9 +96,8 @@ trafficSignPredictor = loadTrafficSignPredictor()
 
 frames_dict = getFramesDict(dataDir)
 for videoName, frames in frames_dict.items():
-	print("Video: " + videoName + ", frames: " + str(frames))
 	videoDir = outDir + "/" + videoName
-	os.mkdir(videoDir)
+	os.makedirs(videoDir, exist_ok=True)
 	
 	for frame, img in getVideoFrames(dataDir + "/JAAD_clips/" + videoName + ".mp4", frames):
 		mask = predictFrame(img, cocoPredictor, trafficSignPredictor)
