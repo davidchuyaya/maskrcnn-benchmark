@@ -22,7 +22,7 @@ def getXY(directory: str):
 	
 	foldRoot = directory + "/pedestrian_dataset_folds"
 	for fold in os.listdir(foldRoot):
-		if fold == "fold_dict.json":
+		if not os.path.isdir(foldRoot + "/" + fold):
 			continue
 		
 		fold_data = []
@@ -36,7 +36,10 @@ def getXY(directory: str):
 			frame_data = ped_json['frame_data']
 			for frame_dict in frame_data:
 				frame_features = []
-				frame_features.extend(frame_dict['resnet_feature'][0])
+
+				resnet = np.array(frame_dict['resnet_feature'][0])
+				resnet = (resnet - np.mean(resnet)) / np.std(resnet)
+				frame_features.extend(resnet)
 				frame_features.extend(frame_dict['attrib_vector'][0])
 				frame_features.extend(frame_dict['global_cue_vector'])
 				frame_features.append(int(frame_dict['standing']))
@@ -87,6 +90,7 @@ def errorAfterTrainingOn(xTr, yTr, xTe, yTe):
 	# set random_state = 0 for replicable results
 	classifier = LinearSVC(penalty="l1", dual=False, random_state=0)
 	classifier.fit(xTr, yTr)
+	print("Weights: " + str(classifier.coef_))
 
 	# evaluate
 	predictions = classifier.predict(xTe)
@@ -97,10 +101,10 @@ def errorAfterTrainingOn(xTr, yTr, xTe, yTe):
 
 
 data, labels = getXY(dataDir)
-# error = np.empty(5)
-# numFolds = 5
-# for i in range(numFolds):
-	# xTr, yTr, xTe, yTe = leaveOneOut(i, data, labels)
-	# error[i] = errorAfterTrainingOn(xTr, yTr, xTe, yTe)
-# print("Std dev: " + str(np.std(error)))
-# print("Mean error: " + str(np.mean(error)))
+error = np.empty(5)
+numFolds = 5
+for i in range(numFolds):
+	xTr, yTr, xTe, yTe = leaveOneOut(i, data, labels)
+	error[i] = errorAfterTrainingOn(xTr, yTr, xTe, yTe)
+print("Std dev: " + str(np.std(error)))
+print("Mean error: " + str(np.mean(error)))
